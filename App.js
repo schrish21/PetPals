@@ -18,12 +18,5 @@ export class App extends Component {
         );
     }
 }
-//sam 03/17/2021 16:15:00
-export default App
 
-//jayjasjdjajdsajsajsdaj
-//sadsadas
-//wosa
-//chekc
-//hello it's Ailyn
-//hello aakash here !
+//ss
