@@ -103,11 +103,11 @@ function Profile (props) {
 
         <ImageBackground source={image} style={styles.photo}>
           <View style={styles.top}>
-            <TouchableOpacity style={styles.topIconRight}>
+            <TouchableOpacity onPress={() => onLogout()} style={styles.topIconRight}>
                 <Text>
-                <Icon name='bars'
+                <Icon name='sign-out'
                       type='font-awesome' 
-                      color='white'
+                      color='tomato'
                       size={22} />
                 </Text>
               </TouchableOpacity> 
@@ -118,7 +118,7 @@ function Profile (props) {
           <View style={styles.containerProfileItem}>
               <View>
                 <Text style={styles.name}>{user.name}</Text>
-                <Text style={styles.descriptionProfileItem}>location</Text>
+                <Text style={styles.descriptionProfileItem}>{user.gender}</Text>
               </View>
 
               <View style={styles.info}>
@@ -129,7 +129,7 @@ function Profile (props) {
                         size={20}
                         />
                 </Text>
-                <Text style={styles.infoContent}>breed description</Text>
+                <Text style={styles.infoContent}>{user.breed}</Text>
             </View>
 
           <View style={styles.info}>
@@ -139,7 +139,7 @@ function Profile (props) {
                     color='#474745'
                     size={20} />
             </Text>
-            <Text style={styles.infoContent}>age</Text>
+            <Text style={styles.infoContent}>{user.age} years old</Text>
           </View>
 
             <View style={styles.info}>
@@ -149,7 +149,7 @@ function Profile (props) {
                         color='#474745'
                         size={20} />
                 </Text>
-                <Text style={styles.infoContent}>interests</Text>
+                <Text style={styles.infoContent}>{user.bio}</Text>
             </View>
           </View>
         </View>

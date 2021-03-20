@@ -109,11 +109,7 @@ export default StyleSheet.create({
 		color: 'white',
 		marginTop: -20,
 		marginLeft: 320,
-		width: 40,
-		height: 40,
-		borderRadius: 25,
-		backgroundColor: 'gray',
-		paddingLeft: 11,
+		paddingLeft: 20,
 		paddingTop: 8
 	},
 	actionsProfile: {
@@ -124,7 +120,8 @@ export default StyleSheet.create({
 	iconButton: { 
 		fontFamily: FONT, 
 		fontSize: 20, 
-		color: 'white' },
+		color: 'white' 
+	},	
 	textButton: {
 		fontFamily: FONT,
 		fontSize: 15,
@@ -154,7 +151,7 @@ export default StyleSheet.create({
 		backgroundColor: 'white',
 		paddingHorizontal: 10,
 		paddingBottom: 25,
-		paddingHorizontal: 15,
+		paddingHorizontal: 45,
 		margin: 20,
 		borderRadius: 8,
 		marginTop: -55,
@@ -167,7 +164,7 @@ export default StyleSheet.create({
 		paddingTop: 25,
 		paddingBottom: 5,
 		color: DARK_GREY,
-		fontSize: 15,
+		fontSize: 25,
 		textAlign: "center"
 	},
 	descriptionProfileItem: {
@@ -189,6 +186,7 @@ export default StyleSheet.create({
 	},
 	infoContent: {
 		color: 'gray',
-		fontSize: 13
+		fontSize: 13,
+		marginLeft: 20
 	},
 });

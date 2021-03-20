@@ -35,7 +35,7 @@ const CardItem = ({
     <View style={styles.containerCardItem}>
       <Image source={image} style={style_Image}/>
       <Text style={style_Name}>{name}</Text>
-      <Text style={styles.bioCardItem}>{bio}</Text>
+      <Text style={styles.bioCardItem}>interests</Text>
 
     </View>
   );
