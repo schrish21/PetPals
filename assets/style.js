@@ -53,16 +53,12 @@ export default StyleSheet.create({
 	},
 	button: {
 		width: 60,
-		height: 60,
-		borderRadius: 30,
+		height: 30,
+		borderRadius: 0,
 		backgroundColor: 'white',
 		marginHorizontal: 7,
 		alignItems: "center",
 		justifyContent: "center",
-		shadowOpacity: 0.15,
-		shadowRadius: 20,
-		shadowColor: DARK_GREY,
-		shadowOffset: { height: 10, width: 0 }
 	},
     like:{
         fontSize: 20,

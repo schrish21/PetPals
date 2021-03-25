@@ -42,7 +42,7 @@ const CardItem = ({
       <TouchableOpacity style={styles.button}>
         <Feather name="x" size={24} color="black" />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.dislike}>
+      <TouchableOpacity style={styles.button}>
         <Text style={styles.like}>
             <Icon name = "heart"
                   type = "antdesign"
@@ -51,6 +51,9 @@ const CardItem = ({
             />
         </Text>
       </TouchableOpacity>
+      <View />
+      <View />
+
       </View>
       
     </View>
