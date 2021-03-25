@@ -24,7 +24,13 @@ export default StyleSheet.create({
 		shadowOpacity: 0.05,
 		shadowRadius: 10,
 		shadowColor: 'black',
-		shadowOffset: { height: 0, width: 0 }
+		shadowOffset: { height: 0, width: 0 },
+	},
+	containerButtons: {
+		height:50,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
 	},
 	bioCardItem: {
 		color: 'gray',

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 import styles from '../assets/style.js';
+import { Feather } from '@expo/vector-icons'; 
 
 const CardItem = ({
   name,
@@ -37,17 +38,21 @@ const CardItem = ({
       <Text style={style_Name}>{name}</Text>
       <Text style={styles.bioCardItem}>insert bio here</Text>
 
+      <View style={styles.containerButtons}>
       <TouchableOpacity style={styles.button}>
+        <Feather name="x" size={24} color="black" />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.dislike}>
         <Text style={styles.like}>
             <Icon name = "heart"
                   type = "antdesign"
                   color = "#e0148f"
                   size = {25}
             />
-
         </Text>
       </TouchableOpacity>
-
+      </View>
+      
     </View>
   );
 };
