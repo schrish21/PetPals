@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, Image, Dimensions } from 'react-native';
-
+import { View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { Icon } from 'react-native-elements';
 import styles from '../assets/style.js';
 
 const CardItem = ({
@@ -36,6 +36,17 @@ const CardItem = ({
       <Image source={image} style={style_Image}/>
       <Text style={style_Name}>{name}</Text>
       <Text style={styles.bioCardItem}>insert bio here</Text>
+
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.like}>
+            <Icon name = "heart"
+                  type = "antdesign"
+                  color = "#e0148f"
+                  size = {25}
+            />
+
+        </Text>
+      </TouchableOpacity>
 
     </View>
   );

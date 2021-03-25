@@ -5,6 +5,7 @@ const PRIMARY_COLOR = 'tomato';
 const SECONDARY_COLOR = "#2245b5";
 const DARK_GREY = "#242424";
 
+const LIKE_ACTIONS = "#f52a96"
 const FONT = OpenSans;
 
 const DIMENSION_WIDTH = Dimensions.get("window").width;
@@ -57,7 +58,10 @@ export default StyleSheet.create({
 		shadowColor: DARK_GREY,
 		shadowOffset: { height: 10, width: 0 }
 	},
-
+    like:{
+        fontSize: 20,
+        color: LIKE_ACTIONS
+    },
 	// CONTAINER - GENERAL
 	bg: {
 		flex: 1,

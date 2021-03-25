@@ -3,6 +3,8 @@ import { Text, View } from "react-native";
 import HomeScreen from "./containers/Home";
 import MainScreen from "./containers/Main";
 import ProfileScreen from "./containers/Profile";
+import styles from "./assets/style";
+import { Icon } from 'react-native-elements';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
