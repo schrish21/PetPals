@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 import styles from '../assets/style.js';
+import CardStack, { Card } from 'react-native-card-stack-swiper';
 import { Feather } from '@expo/vector-icons'; 
 
 const CardItem = ({
@@ -39,10 +40,11 @@ const CardItem = ({
       <Text style={styles.bioCardItem}>insert bio here</Text>
 
       <View style={styles.containerButtons}>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={ () => { this.swiper.swipeLeft() }}>
         <Feather name="x" size={30} color="black" />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+
+      <TouchableOpacity style={styles.button} onPress={ () => { this.swiper.swipeRight() }}>
         <Text style={styles.like}>
             <Icon name = "heart"
                   type = "antdesign"
@@ -51,6 +53,7 @@ const CardItem = ({
             />
         </Text>
       </TouchableOpacity>
+      
       </View>
       
     </View>

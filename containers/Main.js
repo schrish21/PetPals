@@ -34,6 +34,13 @@ export class Main extends Component {
                         <MaterialCommunityIcons name="home" color={color} size={26}/>
                     ),
                 }} />
+
+                <Tab.Screen name="Connected" component={ConnectedScreen}
+                     options={{tabBarIcon:({ color, size }) => (
+                        <MaterialCommunityIcons name="paw" color={color} size={26}/>
+                     ),
+                }} />
+
                 <Tab.Screen name="Profile" component={ProfileScreen} listeners={({ navigation }) => ({
                         tabPress: event => {
                             event.preventDefault();
@@ -44,11 +51,7 @@ export class Main extends Component {
                         <MaterialCommunityIcons name="account-circle" color={color} size={26}/>
                     ),
                 }} />
-                <Tab.Screen name="Connected" component={ConnectedScreen}
-                     options={{tabBarIcon:({ color, size }) => (
-                        <MaterialCommunityIcons name="paws" color={color} size={26}/>
-                     ),
-                     }} />
+
 
             </Tab.Navigator>
         )
