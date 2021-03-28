@@ -78,32 +78,25 @@ export default StyleSheet.create({
 		justifyContent: "space-between",
 		alignItems: "center"
 	},
-	title: { paddingBottom: 10, fontSize: 22, color: DARK_GREY },
 	icon: {
 		fontFamily: FONT,
 		fontSize: 20,
 		color: DARK_GREY,
 		paddingRight: 10
 	},
-
-	// CONTAINER - HOME
-	containerHome: { marginHorizontal: 10 },
-
-	// CONTAINER - MATCHES
+	containerHome: { 
+		marginHorizontal: 10 
+	},
 	containerMatches: {
 		justifyContent: "space-between",
 		flex: 1,
 		paddingHorizontal: 10
 	},
-
-	// CONTAINER - MESSAGES
 	containerMessages: {
 		justifyContent: "space-between",
 		flex: 1,
 		paddingHorizontal: 10
 	},
-	
-	// CONTAINER - PROFILE
 	containerProfile: { marginHorizontal: 0 },
 	photo: {
 		width: DIMENSION_WIDTH,
