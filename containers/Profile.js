@@ -13,8 +13,6 @@ import { useNavigation } from '@react-navigation/native';
 
 function Profile (props) {
 
-  const {image} = Demo[7];
-
   const [userPosts, setUserPosts] = useState([]); 
   const [user, setUser] = useState(null);
   const [following, setFollowing] = useState(false)
@@ -100,7 +98,7 @@ function Profile (props) {
               </TouchableOpacity> 
           </View> 
         </ImageBackground>
-
+ 
         <View>
           <View style={styles.containerProfileItem}>
               <View>
