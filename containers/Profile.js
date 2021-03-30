@@ -3,7 +3,6 @@ import { Image, Button, ScrollView, View, Text, ImageBackground, TouchableOpacit
 import styles from '../assets/style.js';
 
 import { Icon } from 'react-native-elements';
-import Demo from '../assets/Data.js';
 
 import firebase from 'firebase';
 require('firebase/firestore');
@@ -38,7 +37,7 @@ function Profile (props) {
                   }
               })
           firebase.firestore()
-              .collection("posts")
+              .collection("users")
               .doc(props.route.params.uid)
               .collection("userPosts")
               .orderBy("creation", "desc")
@@ -61,7 +60,7 @@ function Profile (props) {
 
   }, [props.route.params.uid, props.following])
 
-  //console.log(userPosts)
+  //console.log(user)
 
   const onLogout = () => {
       firebase.auth().signOut();
@@ -86,7 +85,7 @@ function Profile (props) {
     >
       <ScrollView style={styles.containerProfile}>
 
-        <ImageBackground source={userPosts===undefined || userPosts.length == 0? require('../assets/images/blank-profile.webp'): {uri: userPosts[0].downloadURL} } style={styles.photo}>
+        <ImageBackground source={user.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: user.downloadURL} } style={styles.photo}>
           <View style={styles.top}>
             <TouchableOpacity onPress={() => onLogout()} style={styles.topIconRight}>
                 <Text >

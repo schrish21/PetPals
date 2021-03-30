@@ -1,93 +1,98 @@
-const App = createBottomTabNavigator(
-	{
-		Explore: {
-			screen: HomeScreen,
-			navigationOptions: {
-				tabBarIcon: ({ focused }) => {
-					const iconFocused = focused ? "#7444C0" : "#363636";
-					return (
-						<Text style={[styles.iconMenu, { color: iconFocused }]}>
-							<Icon name='search'
-              					  type='font-awesome' 
-								  color='#474745'
-								  size={16}
-								 	/>
-						</Text>
-					);
-				}
-			}
-		}, 
-		Matches: {
-			screen: MatchesScreen,
-			navigationOptions: {
-				tabBarIcon: ({ focused }) => {
-					const iconFocused = focused ? "#7444C0" : "#363636";
-					return (
-						<Text style={[styles.iconMenu, { color: iconFocused }]}>
-							<Icon name='heart'
-              					  type='font-awesome' 
-								  color='#474745'
-								  size={16} />
-						</Text>
-					);
-				}
-			}
-		},
-		Chat: {
-			screen: MessagesScreen,
-			navigationOptions: {
-				tabBarIcon: ({ focused }) => {
-					const iconFocused = focused ? "#7444C0" : "#363636";
-					return (
-						<Text style={[styles.iconMenu, { color: iconFocused }]}>
-							<Icon name='comments-o'
-              					  type='font-awesome' 
-								  color='#474745'
-								  size={16} />
-						</Text>
-					);
-				}
-			}
-		},
-		Profile: {
-			screen: ProfileScreen,
-			navigationOptions: {
-				tabBarIcon: ({ focused }) => {
-					const iconFocused = focused ? "#7444C0" : "#363636";
-					return (
-						<Text style={[styles.iconMenu, { color: iconFocused }]}>
-							<Icon name='user-circle'
-              					  type='font-awesome' 
-								  color='#474745'
-								  size={16} />
-						</Text>
-					);
-				}
-			}
-		}
-	},
-	{
-		tabBarOptions: {
-			activeTintColor: "#7444C0",
-			inactiveTintColor: "#363636",
-			labelStyle: {
-				fontSize: 14,
-				textTransform: "uppercase",
-				paddingTop: 10
-			},
-			style: {
-				backgroundColor: "#FFF",
-				borderTopWidth: 0,
-				paddingVertical: 30,
-				height: 60,
-				marginBottom: 0,
-				shadowOpacity: 0.05,
-				shadowRadius: 10,
-				shadowColor: "#000",
-				shadowOffset: { height: 0, width: 0 }
-			}
-		}
-	}
-);
+import React, { useState, useEffect } from 'react';
+import {Image, Button, ScrollView, View, Text, ImageBackground, TouchableOpacity, FlatList } from 'react-native';
+import CardStack, { Card } from 'react-native-card-stack-swiper';
+import CardItem from '../components/CardItem';
+import styles from '../assets/style.js';
 
-export default createAppContainer(App);
+import { Icon } from 'react-native-elements';
+
+import firebase from 'firebase';
+require('firebase/firestore');
+import { connect } from 'react-redux';
+
+import Data from '../assets/Data.js';
+
+function Home (props) {
+
+  const [users, setUsers] = useState([])
+  const [usersPosts, setUsersPosts] = useState([]); 
+  const [usersInfo, setUsersInfo] = useState([]); 
+
+  useEffect(() => {
+    firebase.firestore()
+      .collection('users')
+      .get()
+      .then((snapshot) => {
+          let users = snapshot.docs.map(doc => {
+              const data = doc.data();
+              const id = doc.id;
+              return { id, ...data }
+          });
+          setUsers(users);
+    })
+
+    firebase.firestore()
+      .collection('posts')
+      .doc()
+      .collection("userPosts")
+      .orderBy("creation", "desc")
+      .get()
+      .then((snapshot) => {
+          let posts = snapshot.docs.map(doc => {
+              const data = doc.data();
+              const id = doc.id;
+              return { id, ...data }
+          })
+          let usersPosts = {
+            ...users,
+            ...posts
+          };
+
+          setUsersPosts(posts);
+          //console.log('here posts')
+    })
+    
+  }, [])
+
+  //fetchUsers();
+  console.log(usersPosts)
+
+  return (
+    <ImageBackground
+      source={require('../assets/images/bg.png')}
+      style={styles.bg}
+    >
+      <View style={styles.containerHome}>
+        <View style={styles.top}>
+        </View>
+
+        <CardStack
+          loop={true}
+          verticalSwipe={false}
+          renderNoMoreCards={() => null}
+          ref={swiper => (this.swiper = swiper)}
+          key={users.length} 
+        >
+          {users.map((item, index) => (
+            <Card key={index}>
+              <CardItem
+              image={require('../assets/images/bg.png')}
+              name={item.name}
+              bio={item.bio}
+              matches={'m'}
+              actions
+              onPressLeft={() => this.swiper.swipeLeft()}
+              onPressRight={() => this.swiper.swipeRight()}
+              />
+            </Card>
+          ))}
+        </CardStack>
+      </View>
+    </ImageBackground>
+  );
+};
+
+const mapStateToProps = (store) => ({
+
+})
+export default connect(mapStateToProps, null)(Home);

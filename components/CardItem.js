@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Image, Dimensions } from 'react-native';
+import CardStack, { Card } from 'react-native-card-stack-swiper';
 
 import styles from '../assets/style.js';
 
@@ -32,12 +33,17 @@ const CardItem = ({
   ];
 
   return (
-    <View style={styles.containerCardItem}>
-      <Image source={image} style={style_Image}/>
-      <Text style={style_Name}>{name}</Text>
-      <Text style={styles.bioCardItem}>insert bio here</Text>
+    <View>
+
+            <View style={styles.containerCardItem}> 
+              <Image source={image} style={style_Image}/>
+              <Text style={style_Name}>{name}</Text>
+              <Text style={styles.bioCardItem}>{bio}</Text>
+
+            </View>
 
     </View>
+
   );
 };
 

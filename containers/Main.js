@@ -28,7 +28,12 @@ export class Main extends Component {
         return (
 
             <Tab.Navigator initialRouteName="Home" labeled={false} barStyle={{ backgroundColor: 'tomato' }} activeColor="white">
-                <Tab.Screen name="Home" component={HomeScreen} 
+                <Tab.Screen name="Home" component={HomeScreen} listeners={({ navigation }) => ({
+                        tabPress: event => {
+                            event.preventDefault();
+                            navigation.navigate("Home", {uid: firebase.auth().currentUser.uid})
+                        }
+                    })}
                     options={{tabBarIcon:({ color, size }) => (
                         <MaterialCommunityIcons name="home" color={color} size={26}/>
                     ),

@@ -71,13 +71,13 @@ export default function Save(props, {navigation}) {
 
     const savePostData = (downloadURL) => {
         firebase.firestore()
-            .collection('posts')
+            .collection('users')
             .doc(firebase.auth().currentUser.uid)
-            .collection("userPosts")
-            .add({
+            .update({
                 downloadURL,
                 creation: firebase.firestore.FieldValue.serverTimestamp()
-            }).then(function () {
+            },
+            ).then(function () {
                 props.navigation.popToTop()
             })
     }

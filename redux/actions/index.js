@@ -28,7 +28,7 @@ export function fetchUser() {
 export function fetchUserPosts() {
     return ((dispatch) => {
         firebase.firestore()
-            .collection("posts")
+            .collection("users")
             .doc(firebase.auth().currentUser.uid)
             .collection("userPosts")
             .orderBy("creation", "desc")
