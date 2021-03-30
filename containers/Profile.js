@@ -3,15 +3,14 @@ import { Image, Button, ScrollView, View, Text, ImageBackground, TouchableOpacit
 import styles from '../assets/style.js';
 
 import { Icon } from 'react-native-elements';
-import Demo from '../assets/Data.js';
 
 import firebase from 'firebase';
 require('firebase/firestore');
 import { connect } from 'react-redux';
 
-function Profile (props) {
+import { useNavigation } from '@react-navigation/native';
 
-  const {image} = Demo[7];
+function Profile (props) {
 
   const [userPosts, setUserPosts] = useState([]); 
   const [user, setUser] = useState(null);
@@ -38,10 +37,10 @@ function Profile (props) {
                   }
               })
           firebase.firestore()
-              .collection("posts")
+              .collection("users")
               .doc(props.route.params.uid)
               .collection("userPosts")
-              .orderBy("creation", "asc")
+              .orderBy("creation", "desc")
               .get()
               .then((snapshot) => {
                   let posts = snapshot.docs.map(doc => {
@@ -63,23 +62,6 @@ function Profile (props) {
 
   //console.log(user)
 
-  const onFollow = () => {
-      firebase.firestore()
-          .collection("following")
-          .doc(firebase.auth().currentUser.uid)
-          .collection("userFollowing")
-          .doc(props.route.params.uid)
-          .set({})
-  }
-  const onUnfollow = () => {
-      firebase.firestore()
-          .collection("following")
-          .doc(firebase.auth().currentUser.uid)
-          .collection("userFollowing")
-          .doc(props.route.params.uid)
-          .delete()
-  }
-
   const onLogout = () => {
       firebase.auth().signOut();
   }
@@ -92,28 +74,30 @@ function Profile (props) {
         <Text>Empty</Text>
       </View>
     )      
-  }
+  } 
+
+  const navigation = useNavigation();
 
   return (
-    <ImageBackground
+    <ImageBackground 
       source={require('../assets/images/bg.png')}
       style={styles.bg}
     >
       <ScrollView style={styles.containerProfile}>
 
-        <ImageBackground source={image} style={styles.photo}>
+        <ImageBackground source={user.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: user.downloadURL} } style={styles.photo}>
           <View style={styles.top}>
             <TouchableOpacity onPress={() => onLogout()} style={styles.topIconRight}>
-                <Text>
+                <Text >
                 <Icon name='sign-out'
                       type='font-awesome' 
                       color='tomato'
                       size={22} />
                 </Text>
               </TouchableOpacity> 
-          </View>
+          </View> 
         </ImageBackground>
-
+ 
         <View>
           <View style={styles.containerProfileItem}>
               <View>
@@ -155,8 +139,17 @@ function Profile (props) {
         </View>
 
         <View style={styles.actionsProfile}>
-          <TouchableOpacity style={styles.roundedButton}>
+          <TouchableOpacity style={styles.circledButton} onPress={() => navigation.navigate("Save")}>
             <Text style={styles.iconButton}>
+              <Icon name='camera'
+                  type='font-awesome' 
+                  color='white'
+                  size={26} />
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.roundedButton}>
+            <Text style={styles.iconButton}> 
               <Icon name="comments-o"
                     type='font-awesome' 
                     color='white'
@@ -164,7 +157,7 @@ function Profile (props) {
             </Text>
             <Text style={styles.textButton}>Start chatting</Text>
           </TouchableOpacity>
-        </View>
+        </View> 
       
       </ScrollView>
     </ImageBackground>
@@ -173,7 +166,7 @@ function Profile (props) {
 };
 
 const mapStateToProps = (store) => ({
-      currentUser: store.userState.currentUser,
+    currentUser: store.userState.currentUser,
     posts: store.userState.posts,
     following: store.userState.following
 })

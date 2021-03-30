@@ -1,15 +1,28 @@
-import React from 'react';
-import { View, Text, Image, Dimensions } from 'react-native';
+import React, { useState, useEffect }  from 'react';
+import { View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
+import CardStack, { Card } from 'react-native-card-stack-swiper';
 
 import styles from '../assets/style.js';
+import { Icon } from 'react-native-elements';
 
-const CardItem = ({
+import firebase from 'firebase'
+require('firebase/firestore')
+import { connect } from 'react-redux'
+
+
+function CardItem ({
   name,
   image,
   bio,
-  screen
-}) => {
-  
+  uid,
+  screen,
+  onPressLeft,
+  onPressRight,
+}, props) {
+
+  //console.log('current uid from card item = '+ firebase.auth().currentUser.uid)
+  //console.log(uid)
+
   //styles
   const screenWidth = Dimensions.get('window').width;
 
@@ -31,14 +44,95 @@ const CardItem = ({
     }
   ];
 
+  const onFollow = () => {
+    firebase.firestore()
+        .collection("following")
+        .doc(firebase.auth().currentUser.uid)
+        .collection("userFollowing")
+        .doc(uid)
+        .set({})
+        .then(() => alert('Matched user!'))
+  }
+
+  const onUnfollow = () => {
+    firebase.firestore()
+        .collection("following")
+        .doc(firebase.auth().currentUser.uid)
+        .collection("userFollowing")
+        .doc(uid)
+        .delete()
+        .then(() => alert('Removed user!'))
+  }
+
+  function LeftClick() {
+    onUnfollow()
+    onPressRight()
+    return 0
+  }
+
+  function RightClick() {
+    onFollow()
+    onPressLeft()
+    return 0
+  }
+
   return (
-    <View style={styles.containerCardItem}>
+    <View style={styles.containerCardItem}> 
+
+      {/*NAME and BIO*/}
       <Image source={image} style={style_Image}/>
       <Text style={style_Name}>{name}</Text>
-      <Text style={styles.bioCardItem}>insert bio here</Text>
+      <Text style={styles.bioCardItem}>{bio}</Text>
+
+      {/*BUTTONS*/}
+      <View style={styles.actionsCardItem}>
+          <TouchableOpacity style={styles.miniButton}>
+            <Text style={styles.star}>
+              <Icon reverseColor
+                  name='star'
+                  type='font-awesome' 
+                  color='#ffae00'
+                  size={30} />
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={() => LeftClick()}>
+            <Text style={{paddingBottom:5}}>
+              <Icon 
+                  name='times'
+                  type='font-awesome' 
+                  color='#474745'
+                  size={40} />
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={() => RightClick()}>
+            <Text style={styles.like}>
+              <Icon reverseColor
+                  name='heart'
+                  type='font-awesome' 
+                  color='#e83f3f'
+                  size={35} />
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.miniButton}>
+            <Text style={styles.flash}>
+              <Icon reverseColor
+                  name='comments-o'
+                  type='font-awesome' 
+                  color='#1e87c9'
+                  size={30} />
+            </Text>
+          </TouchableOpacity>
+        </View>
 
     </View>
   );
 };
 
-export default CardItem;
+
+const mapStateToProps = (store) => ({
+  currentUser: store.userState.currentUser,
+})
+export default connect(mapStateToProps, null)(CardItem);

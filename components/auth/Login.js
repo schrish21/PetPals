@@ -21,7 +21,10 @@ export class Login extends Component {
             .then((result) => 
                 {console.log(result)})
             .catch((error) => 
-                {console.log(error)})
+                {console.log(error)
+                alert(error)
+                })
+                
     }
 
     render() {

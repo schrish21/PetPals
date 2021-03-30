@@ -45,10 +45,23 @@ export default StyleSheet.create({
 		paddingVertical: 30
 	},
 	button: {
+		width: 70,
+		height: 70,
+		borderRadius: 30,
+		backgroundColor: '#f7d8bc',
+		marginHorizontal: 7,
+		alignItems: "center",
+		justifyContent: "center",
+		shadowOpacity: 0.15,
+		shadowRadius: 20,
+		shadowColor: DARK_GREY,
+		shadowOffset: { height: 10, width: 0 }
+	},
+	miniButton: {
 		width: 60,
 		height: 60,
 		borderRadius: 30,
-		backgroundColor: 'white',
+		backgroundColor: '#f7d8bc',
 		marginHorizontal: 7,
 		alignItems: "center",
 		justifyContent: "center",
@@ -107,10 +120,12 @@ export default StyleSheet.create({
 		fontFamily: FONT,
 		fontSize: 20,
 		color: 'white',
-		marginTop: -20,
+		borderRadius: 25,
+		backgroundColor: 'white',
 		marginLeft: 320,
-		paddingLeft: 20,
-		paddingTop: 8
+		paddingLeft: 10,
+		paddingRight: 8,
+		paddingVertical: 8,
 	},
 	actionsProfile: {
 		justifyContent: "center",
