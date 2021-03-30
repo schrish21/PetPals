@@ -45,10 +45,23 @@ export default StyleSheet.create({
 		paddingVertical: 30
 	},
 	button: {
+		width: 70,
+		height: 70,
+		borderRadius: 30,
+		backgroundColor: '#f7d8bc',
+		marginHorizontal: 7,
+		alignItems: "center",
+		justifyContent: "center",
+		shadowOpacity: 0.15,
+		shadowRadius: 20,
+		shadowColor: DARK_GREY,
+		shadowOffset: { height: 10, width: 0 }
+	},
+	miniButton: {
 		width: 60,
 		height: 60,
 		borderRadius: 30,
-		backgroundColor: 'white',
+		backgroundColor: '#f7d8bc',
 		marginHorizontal: 7,
 		alignItems: "center",
 		justifyContent: "center",

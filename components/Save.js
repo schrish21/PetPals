@@ -75,7 +75,8 @@ export default function Save(props, {navigation}) {
             .doc(firebase.auth().currentUser.uid)
             .update({
                 downloadURL,
-                creation: firebase.firestore.FieldValue.serverTimestamp()
+                creation: firebase.firestore.FieldValue.serverTimestamp(),
+                uid: firebase.auth().currentUser.uid
             },
             ).then(function () {
                 props.navigation.popToTop()

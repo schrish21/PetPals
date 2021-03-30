@@ -6,14 +6,19 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import HomeScreen from "./Home";
 import ProfileScreen from "./Profile";
+import CardItem from "../components/CardItem"
 
 import firebase from 'firebase' 
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchUser, fetchUserPosts, fetchUserFollowing, clearData } from '../redux/actions/index';
+import { fetchUser, fetchUserPosts, clearData } from '../redux/actions/index';
 
 const Tab = createMaterialBottomTabNavigator();
+
+const EmptyScreen = () => {
+    return(null)
+}
 
 export class Main extends Component {
 
@@ -21,7 +26,6 @@ export class Main extends Component {
         this.props.clearData();
         this.props.fetchUser();
         this.props.fetchUserPosts();
-        this.props.fetchUserFollowing();
     }
 
     render() {
@@ -56,6 +60,6 @@ export class Main extends Component {
 const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser
 })
-const mapDispatchProps = (dispatch) => bindActionCreators({ fetchUser, fetchUserPosts, fetchUserFollowing,  clearData  }, dispatch);
+const mapDispatchProps = (dispatch) => bindActionCreators({ fetchUser, fetchUserPosts, clearData  }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchProps)(Main);

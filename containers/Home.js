@@ -39,6 +39,7 @@ function Home (props) {
   console.log(users)
   //console.log(firebase.auth().currentUser)
 
+
   return (
     <ImageBackground
       source={require('../assets/images/bg.png')}
@@ -61,10 +62,11 @@ function Home (props) {
               image={item.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: item.downloadURL} }
               name={item.name}
               bio={item.bio}
+              uid={item.uid}
               matches={'m'}
               actions
-              onPressLeft={() => this.swiper.swipeLeft()}
-              onPressRight={() => this.swiper.swipeRight()}
+              onPressLeft={() => this.swiper.swipeRight()}
+              onPressRight={() => this.swiper.swipeLeft()}
               />
             </Card>
           ))}
