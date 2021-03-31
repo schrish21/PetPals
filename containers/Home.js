@@ -36,7 +36,7 @@ function Home (props) {
   }, [])
 
   //fetchUsers();
-  console.log(users)
+  //console.log(users)
   //console.log(firebase.auth().currentUser)
 
 

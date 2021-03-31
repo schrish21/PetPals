@@ -179,12 +179,12 @@ function Profile (props) {
 
           <TouchableOpacity style={styles.roundedButton}>
             <Text style={styles.iconButton}> 
-              <Icon name="comments-o"
+              <Icon name="cogs"
                     type='font-awesome' 
                     color='white'
                     size={28} />
             </Text>
-            <Text style={styles.textButton}>Start chatting</Text>
+            <Text style={styles.textButton}> Edit Profile</Text>
           </TouchableOpacity>
         </View> 
       

@@ -31,9 +31,10 @@ export default StyleSheet.create({
 		marginBottom: 15
 	},
 	status: {
-		paddingBottom: 10,
+		paddingBottom: 11,
 		flexDirection: "row",
-		alignItems: "center"
+		alignItems: "center",
+		fontSize:21
 	},
 	statusText: {
 		color: 'gray',
@@ -100,6 +101,7 @@ export default StyleSheet.create({
 	containerMatches: {
 		justifyContent: "space-between",
 		flex: 1,
+		flexDirection: 'row',
 		paddingHorizontal: 10
 	},
 
