@@ -15,13 +15,14 @@ function Home (props) {
 
   
   const [users, setUsers] = useState([])
+  
 
   useEffect(() => {
     const { currentUser } = props;
 
     firebase.firestore()
       .collection('users')
-      //.where('email', '>=', firebase.auth().currentUser.email)
+      .where('uid', '!=', firebase.auth().currentUser.uid)
       .get()
       .then((snapshot) => {
           let users = snapshot.docs.map(doc => {
@@ -30,7 +31,6 @@ function Home (props) {
               return { id, ...data }
           });
           setUsers(users);
-
     })
     
   }, [])

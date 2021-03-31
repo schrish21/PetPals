@@ -10,52 +10,46 @@ import firebase from 'firebase';
 require('firebase/firestore');
 import { connect } from 'react-redux';
 
-import Data from '../assets/Data.js';
 
 function Home (props) {
 
+  
   const [users, setUsers] = useState([])
-  const [usersPosts, setUsersPosts] = useState([]); 
-  const [usersInfo, setUsersInfo] = useState([]); 
+  
 
   useEffect(() => {
+    const { currentUser } = props;
+
     firebase.firestore()
       .collection('users')
       .get()
       .then((snapshot) => {
-          let users = snapshot.docs.map(doc => {
+          let users = snapshot.forEach((doc) => {
               const data = doc.data();
               const id = doc.id;
               return { id, ...data }
           });
           setUsers(users);
     })
-
-    firebase.firestore()
-      .collection('posts')
-      .doc()
-      .collection("userPosts")
-      .orderBy("creation", "desc")
-      .get()
-      .then((snapshot) => {
-          let posts = snapshot.docs.map(doc => {
-              const data = doc.data();
-              const id = doc.id;
-              return { id, ...data }
-          })
-          let usersPosts = {
-            ...users,
-            ...posts
-          };
-
-          setUsersPosts(posts);
-          //console.log('here posts')
-    })
     
   }, [])
 
-  //fetchUsers();
-  console.log(usersPosts)
+  firebase.firestore()
+    .collection('users2')
+    .where('gender', '==', 'Male')
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+        });
+      })
+    .catch((error) => {
+      console.log("Error getting documents: ", error);
+  });
+
+  
+
 
   return (
     <ImageBackground
@@ -76,13 +70,14 @@ function Home (props) {
           {users.map((item, index) => (
             <Card key={index}>
               <CardItem
-              image={require('../assets/images/bg.png')}
+              image={item.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: item.downloadURL} }
               name={item.name}
               bio={item.bio}
+              uid={item.uid}
               matches={'m'}
               actions
-              onPressLeft={() => this.swiper.swipeLeft()}
-              onPressRight={() => this.swiper.swipeRight()}
+              onPressLeft={() => this.swiper.swipeRight()}
+              onPressRight={() => this.swiper.swipeLeft()}
               />
             </Card>
           ))}
@@ -93,6 +88,6 @@ function Home (props) {
 };
 
 const mapStateToProps = (store) => ({
-
+  currentUser: store.userState.currentUser,
 })
 export default connect(mapStateToProps, null)(Home);
