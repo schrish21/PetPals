@@ -77,6 +77,7 @@ function CardItem ({
   }
 
   return (
+    
     <View style={styles.containerCardItem}> 
 
       {/*NAME and BIO*/}
