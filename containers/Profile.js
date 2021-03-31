@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, Button, ScrollView, View, Text, ImageBackground, TouchableOpacity} from 'react-native';
+import { Image, Button, ScrollView, View, Text, ImageBackground, TouchableOpacity, RefreshControl,} from 'react-native';
 import styles from '../assets/style.js';
 
 import { Icon } from 'react-native-elements';
@@ -9,12 +9,18 @@ require('firebase/firestore');
 import { connect } from 'react-redux';
 
 import { useNavigation } from '@react-navigation/native';
+import { NavigationEvents } from 'react-navigation';
+
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
 
 function Profile (props) {
 
   const [userPosts, setUserPosts] = useState([]); 
   const [user, setUser] = useState(null);
-  const [following, setFollowing] = useState(false)
+  const [following, setFollowing] = useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   useEffect(() => {
       const { currentUser, posts } = props;
@@ -66,6 +72,23 @@ function Profile (props) {
       firebase.auth().signOut();
   }
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+    firebase.firestore()
+      .collection("users")
+      .doc(props.route.params.uid)
+      .get()
+      .then((snapshot) => {
+          if (snapshot.exists) {
+              setUser(snapshot.data());
+          }
+          else {
+              console.log('does not exist')
+          }
+      })
+  }, []);
+
   if (user === null) {
     return (
       <View>
@@ -83,7 +106,13 @@ function Profile (props) {
       source={require('../assets/images/bg.png')}
       style={styles.bg}
     >
-      <ScrollView style={styles.containerProfile}>
+      
+      <ScrollView style={styles.containerProfile} refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }>
 
         <ImageBackground source={user.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: user.downloadURL} } style={styles.photo}>
           <View style={styles.top}>
