@@ -1,93 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import {Image, Button, ScrollView, View, Text, ImageBackground, TouchableOpacity, FlatList } from 'react-native';
-import CardStack, { Card } from 'react-native-card-stack-swiper';
-import CardItem from '../components/CardItem';
-import styles from '../assets/style.js';
-
-import { Icon } from 'react-native-elements';
-
-import firebase from 'firebase';
-require('firebase/firestore');
-import { connect } from 'react-redux';
-
-
-function Home (props) {
-
-  
-  const [users, setUsers] = useState([])
-  
-
-  useEffect(() => {
-    const { currentUser } = props;
-
-    firebase.firestore()
-      .collection('users')
-      .get()
-      .then((snapshot) => {
-          let users = snapshot.forEach((doc) => {
-              const data = doc.data();
-              const id = doc.id;
-              return { id, ...data }
-          });
-          setUsers(users);
-    })
     
-  }, [])
-
-  firebase.firestore()
-    .collection('users2')
-    .where('gender', '==', 'Male')
-    .get()
-    .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
-        });
+    firebase.firestore()
+      .collection("following")
+      .doc(firebase.auth().currentUser.uid)
+      .collection("userFollowing")
+      .onSnapshot((snapshot) => {
+          let following = snapshot.docs.map(doc => {
+              const id = doc.id;
+              return id
+          })
+          setFollowing(following);
       })
-    .catch((error) => {
-      console.log("Error getting documents: ", error);
-  });
-
-  
-
-
-  return (
-    <ImageBackground
-      source={require('../assets/images/bg.png')}
-      style={styles.bg}
-    >
-      <View style={styles.containerHome}>
-        <View style={styles.top}>
-        </View>
-
-        <CardStack
-          loop={true}
-          verticalSwipe={false}
-          renderNoMoreCards={() => null}
-          ref={swiper => (this.swiper = swiper)}
-          key={users.length} 
-        >
-          {users.map((item, index) => (
-            <Card key={index}>
-              <CardItem
-              image={item.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: item.downloadURL} }
-              name={item.name}
-              bio={item.bio}
-              uid={item.uid}
-              matches={'m'}
-              actions
-              onPressLeft={() => this.swiper.swipeRight()}
-              onPressRight={() => this.swiper.swipeLeft()}
-              />
-            </Card>
-          ))}
-        </CardStack>
-      </View>
-    </ImageBackground>
-  );
-};
-
-const mapStateToProps = (store) => ({
-  currentUser: store.userState.currentUser,
-})
-export default connect(mapStateToProps, null)(Home);

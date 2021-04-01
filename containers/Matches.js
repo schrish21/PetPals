@@ -56,7 +56,8 @@ function Matches (props) {
 
     }, [props.route.params.uid, props.following])
 
-    //console.log(props.following)
+    console.log(props.following)
+    //console.log('folowing =' +following)
     //console.log(usersMatched)
 
   return (
@@ -77,7 +78,7 @@ function Matches (props) {
           <TouchableOpacity>
             <CardMatches
               image={item.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: item.downloadURL} }
-              name={item.name}
+              name={item.name === firebase.auth().currentUser.uid ? null : item.name}
               screen
             />
           </TouchableOpacity>

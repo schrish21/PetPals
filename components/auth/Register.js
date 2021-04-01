@@ -35,6 +35,12 @@ export class Register extends Component {
                         breed, 
                         bio
                     })
+                firebase.firestore()
+                    .collection("following")
+                    .doc(firebase.auth().currentUser.uid)
+                    .collection("userFollowing")
+                    .doc(firebase.auth().currentUser.uid)
+                    .set({})
                 console.log(result)
             })
             .catch((error) => {

@@ -13,30 +13,43 @@ import { connect } from 'react-redux';
 
 function Home (props) {
 
-  
-  const [users, setUsers] = useState([])
+  const [following, setFollowing] = useState([])
+  const [usersMatched, setUsersMatched] = useState([])
   
 
   useEffect(() => {
-    const { currentUser } = props;
 
     firebase.firestore()
-      .collection('users')
-      .where('uid', '!=', firebase.auth().currentUser.uid)
-      .get()
-      .then((snapshot) => {
-          let users = snapshot.docs.map(doc => {
-              const data = doc.data();
+      .collection("following")
+      .doc(firebase.auth().currentUser.uid)
+      .collection("userFollowing")
+      .onSnapshot((snapshot) => {
+          let following = snapshot.docs.map(doc => {
               const id = doc.id;
-              return { id, ...data }
-          });
-          setUsers(users);
+              return id
+          })
+          setFollowing(following);
+          firebase.firestore()
+          .collection('users')
+          .where('uid', 'not-in', following)
+          .get()
+          .then((snapshot) => {
+              let usersMatched = snapshot.docs.map(doc => {
+                  const data = doc.data();
+                  const id = doc.id;
+                  return { id, ...data }
+              });
+              setUsersMatched(usersMatched);
     })
+
+
+  })
     
   }, [])
 
   //fetchUsers();
   //console.log(users)
+  console.log(usersMatched)
   //console.log(firebase.auth().currentUser)
 
 
@@ -54,9 +67,9 @@ function Home (props) {
           verticalSwipe={false}
           renderNoMoreCards={() => null}
           ref={swiper => (this.swiper = swiper)}
-          key={users.length} 
+          key={usersMatched.length} 
         >
-          {users.map((item, index) => (
+          {usersMatched.map((item, index) => (
             <Card key={index}>
               <CardItem
               image={item.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: item.downloadURL} }
