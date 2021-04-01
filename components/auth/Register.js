@@ -95,11 +95,11 @@ export class Register extends Component {
                     onChangeText={(bio) => this.setState({ bio })}
                 />
 
-                <View style={{marginTop:20, margin:5}}>
+                <View style={{marginTop:20, margin:5, width:'90%'}}>
                     <Button
-                    onPress={() => this.onSignUp()}
-                    title="Sign Up"
-                    color='tomato'
+                        onPress={() => this.onSignUp()}
+                        title="Sign Up"
+                        color='#ffa74f'
                 /></View>
                 
             </SafeAreaView>
@@ -109,13 +109,17 @@ export class Register extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 23
+        paddingTop: 23,
+        alignItems: 'center',
+        justifyContent: 'center',
      },
      input: {
-        margin: 5,
+        margin: 7,
         height: 40,
         borderWidth: 1,
         paddingHorizontal: 15,
+        fontSize: 18,
+        width:'90%'
      },
 })
 
