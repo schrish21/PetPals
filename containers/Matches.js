@@ -7,6 +7,9 @@ import firebase from 'firebase';
 require('firebase/firestore');
 import { connect } from 'react-redux';
 
+import { useNavigation } from '@react-navigation/native';
+import { NavigationEvents } from 'react-navigation';
+
 
 function Matches (props) {
 
@@ -14,51 +17,53 @@ function Matches (props) {
   const [following, setFollowing] = useState(false)
   const [usersMatched, setUsersMatched] = useState([])
 
-    useEffect(() => {
-        const { currentUser, posts } = props;
+  useEffect(() => {
+      const { currentUser, posts } = props;
 
-        if (props.route.params.uid === firebase.auth().currentUser.uid) {
-            setUser(currentUser)
-        }
-        else {
-            firebase.firestore()
-                .collection("users")
-                .doc(props.route.params.uid)
-                .get()
-                .then((snapshot) => {
-                    if (snapshot.exists) {
-                        setUser(snapshot.data());
-                    }
-                    else {
-                        console.log('does not exist')
-                    }
-                })
-        }
+      if (props.route.params.uid === firebase.auth().currentUser.uid) {
+          setUser(currentUser)
+      }
+      else {
+          firebase.firestore()
+              .collection("users")
+              .doc(props.route.params.uid)
+              .get()
+              .then((snapshot) => {
+                  if (snapshot.exists) {
+                      setUser(snapshot.data());
+                  }
+                  else {
+                      console.log('does not exist')
+                  }
+              })
+      }
 
-        if (props.following.indexOf(props.route.params.uid) > -1) {
-            setFollowing(true);
-        } else {
-            setFollowing(false);
-        }
+      if (props.following.indexOf(props.route.params.uid) > -1) {
+          setFollowing(true);
+      } else {
+          setFollowing(false);
+      }
 
-        firebase.firestore()
-          .collection('users')
-          .where('uid', 'in', props.following)
-          .get()
-          .then((snapshot) => {
-              let usersMatched = snapshot.docs.map(doc => {
-                  const data = doc.data();
-                  const id = doc.id;
-                  return { id, ...data }
-              });
-              setUsersMatched(usersMatched);
-        })
+      firebase.firestore()
+        .collection('users')
+        .where('uid', 'in', props.following)
+        .get()
+        .then((snapshot) => {
+            let usersMatched = snapshot.docs.map(doc => {
+                const data = doc.data();
+                const id = doc.id;
+                return { id, ...data }
+            });
+            setUsersMatched(usersMatched);
+      })
 
-    }, [props.route.params.uid, props.following])
+  }, [props.route.params.uid, props.following])
 
-    console.log(props.following)
-    //console.log('folowing =' +following)
-    //console.log(usersMatched)
+  console.log(props.following)
+  //console.log('folowing =' +following)
+  //console.log(usersMatched)
+
+  const navigation = useNavigation();  
 
   return (
     <View style={styles.containerMatches}>
@@ -73,16 +78,20 @@ function Matches (props) {
         numColumns={2}
         data={usersMatched}
         horizontal={false}
-
         renderItem={({ item }) => (
-          <TouchableOpacity>
+            
+          item.uid != firebase.auth().currentUser.uid ?
+          <TouchableOpacity onPress={() => navigation.navigate("Profile", {uid: item.uid})}>
             <CardMatches
+              name={item.uid === firebase.auth().currentUser.uid ? null : item.name}
               image={item.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: item.downloadURL} }
-              name={item.name === firebase.auth().currentUser.uid ? null : item.name}
               screen
             />
           </TouchableOpacity>
+          : <View></View>
+
         )}
+        keyExtractor={(item) => item.title}
       />
     </ImageBackground>
     </View>
