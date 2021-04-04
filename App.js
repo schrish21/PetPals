@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Text, View } from "react-native";
 
-import HomeScreen from "./containers/Home";
 import MainScreen from "./containers/Main";
+import HomeScreen from "./containers/Home";
+import MatchesScreen from "./containers/Matches";
 import ProfileScreen from "./containers/Profile";
 
 import SaveScreen from './components/Save';
@@ -90,6 +91,7 @@ export class App extends Component {
                 <Stack.Navigator initialRouteName="Main">
                     <Stack.Screen name="Main" component={MainScreen} options={{ headerShown: false}}/>
                     <Stack.Screen name="Home" component={HomeScreen} navigation={this.props.navigation} options={{ headerShown: false}} />
+                    <Stack.Screen name="Matches" component={MatchesScreen} navigation={this.props.navigation} options={{ headerShown: false}} />
                     <Stack.Screen name="Profile" component={ProfileScreen} navigation={this.props.navigation} options={{ headerShown: false}}/>
                     <Stack.Screen name="Save" component={SaveScreen} navigation={this.props.navigation}/>
                 </Stack.Navigator>

@@ -1,9 +1,9 @@
+  
 import React, { Component } from 'react';
-import { View, Button, TextInput } from 'react-native';
-
+import { StyleSheet, View, Button, Text, TextInput, Image , Dimensions, TouchableOpacity  } from 'react-native';
 import firebase from 'firebase';
-
 export class Login extends Component {
+
     constructor(props){
         super(props);
 
@@ -21,33 +21,71 @@ export class Login extends Component {
             .then((result) => 
                 {console.log(result)})
             .catch((error) => 
-                {console.log(error)
-                alert(error)
-                })
-                
+                {console.log(error)})
     }
+
+
 
     render() {
         return (
-            <View>
-
+            <View style = {styles.container}>
+               <Image style={styles.image} source={require("../../assets/images/draft_1.png")}/>
+                <View style = {styles.inputView}>
                 <TextInput 
+                    style = {styles.text}
                     placeholder="email"
+                    placeholderTextColor="#003f5c"
                     onChangeText={(email) => this.setState({ email: email })}
                 />
+                 </View>
+
+                <View style = {styles.inputView}>
                 <TextInput 
+                    style = {styles.text}
                     placeholder="password"
+                    placeholderTextColor="#003f5c"
                     secureTextEntry={true}
                     onChangeText={(password) => this.setState({ password: password })}
                 />
+                 </View>
 
-                <Button
-                    onPress={() => this.onSignIn()}
-                    title="Sign In"
-                />
-            </View>
+                <View style = {styles.loginBtn}>
+                    <Button
+                        onPress={() => this.onSignIn()}
+                        title="Sign In"
+                        color='tomato'
+                    />
+                 </View>
+             </View>
         )
     }
 }
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    image: {
+        marginBottom: 20,
+    },
+    text: {
+        fontSize: 22,
+        marginTop: 5
+    },
+    inputView: {
+        backgroundColor: "#ffe4b5",
+        width:"80%",
+        height:50,
+        marginBottom: 20,
+        alignItems: "center",
+    },
+    loginBtn:
+     {
+        width:"80%",
+        marginTop:40,
+     },
+});
+const {SCREEN_WIDTH, SCREEN_HEIGHT} = Dimensions.get("window");
 export default Login

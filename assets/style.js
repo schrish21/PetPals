@@ -31,9 +31,10 @@ export default StyleSheet.create({
 		marginBottom: 15
 	},
 	status: {
-		paddingBottom: 10,
+		paddingBottom: 11,
 		flexDirection: "row",
-		alignItems: "center"
+		alignItems: "center",
+		fontSize:21
 	},
 	statusText: {
 		color: 'gray',
@@ -100,6 +101,7 @@ export default StyleSheet.create({
 	containerMatches: {
 		justifyContent: "space-between",
 		flex: 1,
+		flexDirection: 'row',
 		paddingHorizontal: 10
 	},
 
@@ -114,18 +116,16 @@ export default StyleSheet.create({
 	containerProfile: { marginHorizontal: 0 },
 	photo: {
 		width: DIMENSION_WIDTH,
-		height: 450
+		height: 410
 	},
 	topIconRight: {
-		fontFamily: FONT,
-		fontSize: 20,
 		color: 'white',
+		width: 40,
+		height: 40,
 		borderRadius: 25,
 		backgroundColor: 'white',
 		marginLeft: 320,
-		paddingLeft: 10,
-		paddingRight: 8,
-		paddingVertical: 8,
+		paddingHorizontal:10
 	},
 	actionsProfile: {
 		justifyContent: "center",
@@ -137,6 +137,10 @@ export default StyleSheet.create({
 		fontSize: 20, 
 		color: 'white' 
 	},	
+	iconButtonLogOut:{
+		paddingTop:7,
+		marginLeft:2
+	},
 	textButton: {
 		fontFamily: FONT,
 		fontSize: 15,
@@ -148,6 +152,15 @@ export default StyleSheet.create({
 		height: 50,
 		borderRadius: 25,
 		backgroundColor: 'gray',
+		justifyContent: "center",
+		alignItems: "center",
+		marginRight: 12
+	},
+	circledButtonX: {
+		width: 50,
+		height: 50,
+		borderRadius: 25,
+		backgroundColor: '#e83f3f',
 		justifyContent: "center",
 		alignItems: "center",
 		marginRight: 12

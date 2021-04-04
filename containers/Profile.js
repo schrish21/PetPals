@@ -101,6 +101,21 @@ function Profile (props) {
 
   const navigation = useNavigation();
 
+  const onUnfollow = () => {
+    firebase.firestore()
+        .collection("following")
+        .doc(firebase.auth().currentUser.uid)
+        .collection("userFollowing")
+        .doc(uid)
+        .delete()
+        .then(() => alert('Removed user!'))
+  }
+
+  function LeftClick() {
+    onUnfollow()
+    return 0
+  }
+
   return (
     <ImageBackground 
       source={require('../assets/images/bg.png')}
@@ -114,19 +129,23 @@ function Profile (props) {
           />
         }>
 
+        
         <ImageBackground source={user.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: user.downloadURL} } style={styles.photo}>
           <View style={styles.top}>
+            {props.route.params.uid == firebase.auth().currentUser.uid ? (
             <TouchableOpacity onPress={() => onLogout()} style={styles.topIconRight}>
-                <Text >
+              <Text style={styles.iconButtonLogOut}> 
                 <Icon name='sign-out'
                       type='font-awesome' 
                       color='tomato'
                       size={22} />
                 </Text>
               </TouchableOpacity> 
+            ): null}
           </View> 
         </ImageBackground>
- 
+          
+
         <View>
           <View style={styles.containerProfileItem}>
               <View>
@@ -166,7 +185,8 @@ function Profile (props) {
             </View>
           </View>
         </View>
-
+        
+        {props.route.params.uid == firebase.auth().currentUser.uid ? (
         <View style={styles.actionsProfile}>
           <TouchableOpacity style={styles.circledButton} onPress={() => navigation.navigate("Save")}>
             <Text style={styles.iconButton}>
@@ -179,6 +199,28 @@ function Profile (props) {
 
           <TouchableOpacity style={styles.roundedButton}>
             <Text style={styles.iconButton}> 
+              <Icon name="cogs"
+                    type='font-awesome' 
+                    color='white'
+                    size={28} />
+            </Text>
+            <Text style={styles.textButton}> Edit Profile</Text>
+          </TouchableOpacity>
+        </View> 
+        ): 
+        <View style={styles.actionsProfile}>
+          <TouchableOpacity style={styles.circledButtonX}>
+            <Text style={styles.iconButton}>
+              <Icon 
+                  name='times'
+                  type='font-awesome' 
+                  color='white'
+                  size={26} />
+            </Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity style={styles.roundedButton}>
+            <Text style={styles.iconButton}> 
               <Icon name="comments-o"
                     type='font-awesome' 
                     color='white'
@@ -186,7 +228,8 @@ function Profile (props) {
             </Text>
             <Text style={styles.textButton}>Start chatting</Text>
           </TouchableOpacity>
-        </View> 
+        </View>
+        }
       
       </ScrollView>
     </ImageBackground>
