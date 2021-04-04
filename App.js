@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+git checkout -t -f remote/branchimport React, { Component } from "react";
 import { Text, View } from "react-native";
 
 import MainScreen from "./containers/Main";
