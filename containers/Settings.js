@@ -73,7 +73,6 @@ return(
             </View>
             <View>
                 <Text style={styles.settingsGeneral}> Logout </Text>
-
                     <TouchableOpacity onPress={() => onLogout()} style={styles.IconRight} >
                         <Text style={styles.iconButtonLogOut}>
                             <Icon name='sign-out'
@@ -82,7 +81,6 @@ return(
                                 size={22} />
                         </Text>
                     </TouchableOpacity>
-
            </View>
         </View>
        </ImageBackground>

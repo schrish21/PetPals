@@ -6,6 +6,7 @@ import HomeScreen from "./containers/Home";
 import MatchesScreen from "./containers/Matches";
 import ProfileScreen from "./containers/Profile";
 
+import SettingsScreen from "./containers/Settings";
 import SaveScreen from './components/Save';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -93,7 +94,9 @@ export class App extends Component {
                     <Stack.Screen name="Home" component={HomeScreen} navigation={this.props.navigation} options={{ headerShown: false}} />
                     <Stack.Screen name="Matches" component={MatchesScreen} navigation={this.props.navigation} options={{ headerShown: false}} />
                     <Stack.Screen name="Profile" component={ProfileScreen} navigation={this.props.navigation} options={{ headerShown: false}}/>
+
                     <Stack.Screen name="Save" component={SaveScreen} navigation={this.props.navigation}/>
+                    <Stack.Screen name="Settings" component={SettingsScreen} navigation={this.props.navigation}/>
                 </Stack.Navigator>
           </NavigationContainer>
           </Provider>

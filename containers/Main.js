@@ -7,9 +7,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import HomeScreen from "./Home";
 import MatchesScreen from "./Matches";
 import ProfileScreen from "./Profile";
-import CardItem from "../components/CardItem"
+import SettingsScreen from "./Settings";
+import CardItem from "../components/CardItem";
 
-import firebase from 'firebase' 
+import firebase from 'firebase';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -64,6 +65,7 @@ export class Main extends Component {
                         <MaterialCommunityIcons name="account-circle" color={color} size={26}/>
                     ),
                 }} />
+
             </Tab.Navigator>
         )
     }

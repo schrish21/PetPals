@@ -34,7 +34,7 @@ export default StyleSheet.create({
 		paddingBottom: 11,
 		flexDirection: "row",
 		alignItems: "center",
-		fontSize:21
+		fontSize:30
 	},
 	statusText: {
 		color: 'gray',
@@ -118,15 +118,7 @@ export default StyleSheet.create({
 		width: DIMENSION_WIDTH,
 		height: 410
 	},
-	topIconRight: {
-		color: 'white',
-		width: 40,
-		height: 40,
-		borderRadius: 25,
-		backgroundColor: 'white',
-		marginLeft: 320,
-		paddingHorizontal:10
-	},
+
 	actionsProfile: {
 		justifyContent: "center",
 		flexDirection: "row",
@@ -136,10 +128,6 @@ export default StyleSheet.create({
 		fontFamily: FONT, 
 		fontSize: 20, 
 		color: 'white' 
-	},	
-	iconButtonLogOut:{
-		paddingTop:7,
-		marginLeft:2
 	},
 	textButton: {
 		fontFamily: FONT,
@@ -217,4 +205,27 @@ export default StyleSheet.create({
 		fontSize: 13,
 		marginLeft: 20
 	},
+
+	// CONTAINER - Settings
+    settingsContainer: {
+    		flex: 1,
+    		flexDirection: 'column'
+    },
+
+    iconButtonLogOut:{
+    		paddingTop:7,
+    		marginLeft:2
+    },
+
+    IconRight: {
+    		width: 40,
+    		height: 70,
+    		marginLeft: 320,
+    		paddingHorizontal:10
+    	},
+    settingsGeneral:{
+        fontFamily: FONT,
+        fontSize: 25
+    },
+
 });
