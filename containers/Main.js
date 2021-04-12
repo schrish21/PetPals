@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons'; 
 
 import HomeScreen from "./Home";
 import MatchesScreen from "./Matches";
 import ProfileScreen from "./Profile";
+import SettingScreen from "./Settings";
 import CardItem from "../components/CardItem"
 
 import firebase from 'firebase' 
@@ -63,6 +65,17 @@ export class Main extends Component {
                     options={{tabBarIcon:({ color, size }) => (
                         <MaterialCommunityIcons name="account-circle" color={color} size={26}/>
                     ),
+                }} />
+
+                <Tab.Screen name="Settings" component={SettingScreen} listeners={({ navigation }) => ({
+                        tabPress: event => {
+                            event.preventDefault();
+                            navigation.navigate("Settings", {uid: firebase.auth().currentUser.uid})
+                        }
+                    })}
+                     options={{tabBarIcon:({ color, size }) => (
+                        <Feather name="settings" size={26} color={color} />
+                     ),
                 }} />
             </Tab.Navigator>
         )

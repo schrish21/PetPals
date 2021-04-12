@@ -14,6 +14,12 @@ export default StyleSheet.create({
 
 
 	// COMPONENT - CARD ITEM
+	container: {
+		flex: 1,
+		backgroundColor: '#fff',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
 	containerCardItem: {
 		backgroundColor: 'white',
 		borderRadius: 8,
@@ -127,6 +133,15 @@ export default StyleSheet.create({
 		marginLeft: 320,
 		paddingHorizontal:10
 	},
+	settings: {
+		color: 'white',
+		width: 40,
+		height: 40,
+		borderRadius: 25,
+		backgroundColor: 'white',
+		marginLeft: 320,
+		paddingHorizontal:9.6
+	},
 	actionsProfile: {
 		justifyContent: "center",
 		flexDirection: "row",
@@ -140,6 +155,10 @@ export default StyleSheet.create({
 	iconButtonLogOut:{
 		paddingTop:7,
 		marginLeft:2
+	},
+	iconButtonSettings:{
+		paddingTop:8,
+		marginLeft:-1
 	},
 	textButton: {
 		fontFamily: FONT,

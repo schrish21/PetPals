@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Image, Button, ScrollView, View, Text, ImageBackground, TouchableOpacity, RefreshControl,} from 'react-native';
 import styles from '../assets/style.js';
-
 import { Icon } from 'react-native-elements';
 
 import firebase from 'firebase';
