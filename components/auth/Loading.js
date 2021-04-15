@@ -21,7 +21,7 @@ render(){
                                  loop = {false}
                                  speed ={0.5}
                                  onAnimationFinish={()=>{
-                                 this.props.navigation.replace("Landing");
+                                 this.props.navigation.replace("Login");
                                  }}
                                  />
 

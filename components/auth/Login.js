@@ -59,6 +59,13 @@ export class Login extends Component {
                 />
 
                  </View>
+                 <View>
+                 <Button
+                                 title="Register"
+                                 onPress={() =>
+                                  this.props.navigation.navigate("Register")}
+                             />
+                 </View>
                  </View>
 
 
@@ -77,6 +84,7 @@ const styles = StyleSheet.create({
    height: null ,
    width: null
    , resizeMode : "contain",
+    marginTop: 80
     },
    inputView: {
       backgroundColor: "#ffe4b5",
