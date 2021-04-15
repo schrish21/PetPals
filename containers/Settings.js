@@ -18,7 +18,7 @@ function Settings(props, {navigation}){
     const [HaveNotification, setNotification] = useState(false);
 
     const toggleNotification = () => {
-        setNotification(!HaveNotification);
+        setNotification(HaveNotification => !HaveNotification);
     }
 
     useEffect(() => {
@@ -63,11 +63,11 @@ return(
             </View>
             <View>
                 <Text style={styles.settingsGeneral}> Notification </Text>
-            </View>
-            <View>
                 <TouchableRipple onPress={() => toggleNotification}>
-                    <View style={styles.IconRight} pointerEvents="none">
-                        <Switch value = {HaveNotification} />
+                    <View style={styles.IconRight}>
+                        <Switch
+                        onValueChange = {toggleNotification}
+                        value = {HaveNotification} />
                     </View>
                 </TouchableRipple>
             </View>
