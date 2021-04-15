@@ -12,44 +12,12 @@ import { Icon } from 'react-native-elements';
 
 
 function Settings(props, {navigation}){
-  const [user, setUser] = useState(null);
-    const [following, setFollowing] = useState([])
-    const [usersMatched, setUsersMatched] = useState([])
+
     const [HaveNotification, setNotification] = useState(false);
 
     const toggleNotification = () => {
         setNotification(HaveNotification => !HaveNotification);
     }
-
-    useEffect(() => {
-
-      firebase.firestore()
-        .collection("following")
-        .doc(firebase.auth().currentUser.uid)
-        .collection("userFollowing")
-        .onSnapshot((snapshot) => {
-            let following = snapshot.docs.map(doc => {
-                const id = doc.id;
-                return id
-            })
-            setFollowing(following);
-            firebase.firestore()
-            .collection('users')
-            .where('uid', 'not-in', following)
-            .get()
-            .then((snapshot) => {
-                let usersMatched = snapshot.docs.map(doc => {
-                    const data = doc.data();
-                    const id = doc.id;
-                    return { id, ...data }
-                });
-                setUsersMatched(usersMatched);
-          })
-
-
-        })
-
-        }, [])
 
     const onLogout = () => {
             firebase.auth().signOut();
@@ -58,22 +26,17 @@ function Settings(props, {navigation}){
 return(
     <ImageBackground source={require('../assets/images/bg.png')} style={styles.bg}>
         <View style={styles.settingsContainer}>
-            <View style={styles.top}>
-                <Text style={styles.status}>Settings</Text>
-            </View>
-            <View>
-                <Text style={styles.settingsGeneral}> Notification </Text>
-                <TouchableRipple onPress={() => toggleNotification}>
-                    <View style={styles.IconRight}>
+            <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.settingsGeneral}> Alerts </Text>          
+                    <View style={styles.IconSettings} onPress={() => toggleNotification}>
                         <Switch
                         onValueChange = {toggleNotification}
                         value = {HaveNotification} />
                     </View>
-                </TouchableRipple>
             </View>
-            <View>
+            <View style={{ flexDirection: 'row' }}>
                 <Text style={styles.settingsGeneral}> Logout </Text>
-                    <TouchableOpacity onPress={() => onLogout()} style={styles.IconRight} >
+                    <TouchableOpacity style={styles.IconSettings} onPress={() => onLogout()}>
                         <Text style={styles.iconButtonLogOut}>
                             <Icon name='sign-out'
                                 type='font-awesome'
@@ -81,7 +44,7 @@ return(
                                 size={22} />
                         </Text>
                     </TouchableOpacity>
-           </View>
+            </View>
         </View>
        </ImageBackground>
     );
