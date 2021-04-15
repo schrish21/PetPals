@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Button, TextInput, Image , Dimensions  } from 'react-native';
 import firebase from 'firebase';
 import ImageResizeMode from 'react-native/Libraries/Image/ImageResizeMode'
+
 export class Login extends Component {
 
     constructor(props){
@@ -29,6 +30,8 @@ export class Login extends Component {
     render() {
         return (
                <View style = {styles.container}>
+
+
                <Image style={styles.image} source={require("../../assets/images/draft_1.png")}/>
                 <View style = {styles.inputView}>
                 <TextInput 

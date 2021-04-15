@@ -11,7 +11,7 @@ const Stack = createStackNavigator();
 import LandingScreen from './components/auth/Landing';
 import RegisterScreen from './components/auth/Register';
 import LoginScreen from './components/auth/Login';
-
+import LoadingScreen from './components/auth/Loading';
 import * as firebase from 'firebase';
 
 import { Provider } from 'react-redux';
@@ -72,10 +72,11 @@ export class App extends Component {
         if(!loggedIn){
         return (
             <NavigationContainer>
-            <Stack.Navigator initialRouteName="Landing">
+            <Stack.Navigator initialRouteName="Loading">
                 <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false}}/>
                 <Stack.Screen name="Register" component={RegisterScreen}/>
-                <Stack.Screen name="Login" component={LoginScreen}/>
+                <Stack.Screen name="Loading" component={LoadingScreen} navigation ={this.props.navigation} options={{headerShown : false}}/>
+                <Stack.Screen name="Login"   component = {LoginScreen}/>
             </Stack.Navigator>
             </NavigationContainer>
         );
