@@ -8,10 +8,10 @@ import { Feather } from '@expo/vector-icons';
 import HomeScreen from "./Home";
 import MatchesScreen from "./Matches";
 import ProfileScreen from "./Profile";
-import SettingScreen from "./Settings";
-import CardItem from "../components/CardItem"
+import SettingsScreen from "./Settings";
+import CardItem from "../components/CardItem";
 
-import firebase from 'firebase' 
+import firebase from 'firebase';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -67,16 +67,6 @@ export class Main extends Component {
                     ),
                 }} />
 
-                <Tab.Screen name="Settings" component={SettingScreen} listeners={({ navigation }) => ({
-                        tabPress: event => {
-                            event.preventDefault();
-                            navigation.navigate("Settings", {uid: firebase.auth().currentUser.uid})
-                        }
-                    })}
-                     options={{tabBarIcon:({ color, size }) => (
-                        <Feather name="settings" size={26} color={color} />
-                     ),
-                }} />
             </Tab.Navigator>
         )
     }
