@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Image, Button, ScrollView, View, Text, ImageBackground, TouchableOpacity, RefreshControl,} from 'react-native';
+import { Image, Button, ScrollView, View, Text, ImageBackground, TouchableOpacity, RefreshControl, LogBox} from 'react-native';
 import styles from '../assets/style.js';
 
 import { Icon } from 'react-native-elements';
+
+import Save from '../components/Save';
 
 import firebase from 'firebase';
 require('firebase/firestore');
@@ -15,12 +17,17 @@ const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
 
+LogBox.ignoreLogs(['Setting a timer for a long period of time'])
+
 function Profile (props) {
 
   const [userPosts, setUserPosts] = useState([]); 
   const [user, setUser] = useState(null);
   const [following, setFollowing] = useState(false);
+  const [usersChat, setUsersChat] = useState([])
   const [refreshing, setRefreshing] = React.useState(false);
+
+  //console.log(props.route.params.name)
 
   useEffect(() => {
       const { currentUser, posts } = props;
@@ -56,6 +63,19 @@ function Profile (props) {
                   })
                   setUserPosts(posts)
               })
+
+          firebase.firestore()
+              .collection('users')
+              .where('uid', 'in', props.chat)
+              .get()
+              .then((snapshot) => {
+                  let usersChat = snapshot.docs.map(doc => {
+                      const data = doc.data();
+                      const id = doc.id;
+                      return { id, ...data }
+                  });
+                  setUsersChat(usersChat);
+            })
       }
 
       if (props.following.indexOf(props.route.params.uid) > -1) {
@@ -99,21 +119,38 @@ function Profile (props) {
     )      
   } 
 
-  const navigation = useNavigation();
+  const navigation = useNavigation();  
 
   const onUnfollow = () => {
     firebase.firestore()
         .collection("following")
         .doc(firebase.auth().currentUser.uid)
         .collection("userFollowing")
-        .doc(uid)
+        .doc(props.route.params.uid)
         .delete()
         .then(() => alert('Removed user!'))
   }
 
-  function LeftClick() {
-    onUnfollow()
-    return 0
+  const startChat = () => {
+    if(props.chat.includes(props.route.params.uid)){
+      alert('chat already exists')
+    }
+    else{
+      firebase.firestore()
+        .collection('chats')
+        .doc(firebase.auth().currentUser.uid)
+        .collection('userChat')
+        .doc(props.route.params.uid)
+        .set({})
+      firebase.firestore()
+        .collection('chats')
+        .doc(props.route.params.uid)
+        .collection('userChat')
+        .doc(firebase.auth().currentUser.uid)
+        .set({})
+
+        alert('direct to chat')
+    }
   }
 
   return (
@@ -209,7 +246,7 @@ function Profile (props) {
         </View> 
         ): 
         <View style={styles.actionsProfile}>
-          <TouchableOpacity style={styles.circledButtonX}>
+          <TouchableOpacity style={styles.circledButtonX} onPress={()=> onUnfollow()}>
             <Text style={styles.iconButton}>
               <Icon 
                   name='times'
@@ -219,7 +256,7 @@ function Profile (props) {
             </Text>
           </TouchableOpacity>
           
-          <TouchableOpacity style={styles.roundedButton}>
+          <TouchableOpacity style={styles.roundedButton} onPress={() => startChat()}>
             <Text style={styles.iconButton}> 
               <Icon name="comments-o"
                     type='font-awesome' 
@@ -240,6 +277,7 @@ function Profile (props) {
 const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser,
     posts: store.userState.posts,
-    following: store.userState.following
+    following: store.userState.following,
+    chat: store.userState.chat
 })
 export default connect(mapStateToProps, null)(Profile);

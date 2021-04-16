@@ -47,8 +47,7 @@ function Matches (props) {
       firebase.firestore()
         .collection('users')
         .where('uid', 'in', props.following)
-        .get()
-        .then((snapshot) => {
+        .onSnapshot((snapshot) => {
             let usersMatched = snapshot.docs.map(doc => {
                 const data = doc.data();
                 const id = doc.id;
@@ -81,14 +80,15 @@ function Matches (props) {
         renderItem={({ item }) => (
             
           item.uid != firebase.auth().currentUser.uid ?
-          <TouchableOpacity onPress={() => navigation.navigate("Profile", {uid: item.uid})}>
+          <TouchableOpacity onPress={() => navigation.navigate("Profile", {uid: item.uid, name:item.name})}>
             <CardMatches
               name={item.uid === firebase.auth().currentUser.uid ? null : item.name}
               image={item.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: item.downloadURL} }
               screen
             />
           </TouchableOpacity>
-          : <View></View>
+          : 
+          <View></View>
 
         )}
         keyExtractor={(item) => item.title}

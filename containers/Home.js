@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Image, Button, ScrollView, View, Text, ImageBackground, TouchableOpacity, FlatList } from 'react-native';
+import {Image, Button, ScrollView, View, Text, ImageBackground, TouchableOpacity, FlatList, LogBox } from 'react-native';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
 import CardItem from '../components/CardItem';
 import styles from '../assets/style.js';
@@ -10,6 +10,7 @@ import firebase from 'firebase';
 require('firebase/firestore');
 import { connect } from 'react-redux';
 
+LogBox.ignoreAllLogs()
 
 function Home (props) {
 

@@ -31,59 +31,32 @@ LogBox.ignoreLogs(['Setting a timer for a long period of time'])
 
 function Chat (props) {
 
-    const [user, setUser] = useState(null);
-    const [following, setFollowing] = useState(false)
-    const [usersMatched, setUsersMatched] = useState([])
-
-    const [user1, setUser1] = useState(null)
+    const [user, setUser] = useState(null)
     const [name, setName] = useState('')
     const [messages, setMessages] = useState([])
 
-    const chatsRef = firebase.firestore().collection('chats').doc(props.route.params.uid).collection('userChat').doc('XpwIBoloZGaPbSMmlSKs4ISyTZv1').collection('conversation')
+    const chatsRef = firebase.firestore()
+                        .collection('chats')
+                        .doc(props.route.params.uid)
+                        .collection('userChat')
+                        .doc(props.route.params.userConversation)
+                        .collection('conversation')
+
+    const chatsRef2 = firebase.firestore()
+                        .collection('chats')
+                        .doc(props.route.params.userConversation)
+                        .collection('userChat')
+                        .doc(props.route.params.uid)
+                        .collection('conversation')
 
     useEffect(() => {
-        const { currentUser, posts } = props;
 
-        if (props.route.params.uid === firebase.auth().currentUser.uid) {
-            setUser(currentUser)
-
+        if(!user){
+            const _id = props.route.params.uid
+            const name = props.route.params.uname
+            const user = { _id, name }
+            setUser(user)
         }
-        else {
-            firebase.firestore()
-                .collection("users")
-                .doc(props.route.params.uid)
-                .get()
-                .then((snapshot) => {
-                    if (snapshot.exists) {
-                        setUser(snapshot.data());
-                        setUser1(snapshot.data());
-                    }
-                    else {
-                        console.log('does not exist')
-                    }
-                })
-        }
-
-
-
-        if (props.following.indexOf(props.route.params.uid) > -1) {
-            setFollowing(true);
-        } else {
-            setFollowing(false);
-        }
-
-        firebase.firestore()
-            .collection('users')
-            .where('uid', 'in', props.following)
-            .get()
-            .then((snapshot) => {
-                let usersMatched = snapshot.docs.map(doc => {
-                    const data = doc.data();
-                    const id = doc.id;
-                    return { id, ...data }
-                });
-                setUsersMatched(usersMatched);
-        })
 
         //handlePress() 
         //readUser()
@@ -94,8 +67,6 @@ function Chat (props) {
                 .filter(({ type }) => type === 'added')
                 .map(({ doc }) => {
                     const message = doc.data()
-                    //createdAt is firebase.firestore.Timestamp instance
-                    //https://firebase.google.com/docs/reference/js/firebase.firestore.Timestamp
                     return { ...message, createdAt: message.createdAt.toDate() }
                 })
                 .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
@@ -103,12 +74,7 @@ function Chat (props) {
         })
         return () => unsubscribe()
 
-    }, [props.route.params.uid, props.following])
-
-    //console.log(props.following)
-    //console.log('folowing =' +following)
-    //console.log(usersMatched)
-    
+    }, [props.route.params.uid])
 
     const appendMessages = useCallback(
         (messages) => {
@@ -118,32 +84,33 @@ function Chat (props) {
     )
 
     async function readUser() {
-        const user1 = await AsyncStorage.getItem('user1')
-        if (user1) {
-            setUser1(JSON.parse(user1))
+        const user = await AsyncStorage.getItem('user')
+        if (user) {
+            setUser(JSON.parse(user))
         }
     }
     async function handlePress() {
         const _id = user.uid
         const name = user.name
-        const user1 = { _id, name }
-        await AsyncStorage.setItem('user', JSON.stringify(user1))
-        setUser1(user1)
+        const user = { _id, name }
+        await AsyncStorage.setItem('user', JSON.stringify(user))
+        setUser(user)
     }
     async function handleSend(messages) {
         handlePress()
         const writes = messages.map((m) => chatsRef.add(m))
-        await Promise.all(writes)
+        const writes2 = messages.map((m2) => chatsRef2.add(m2))
+        await Promise.all(writes, writes2, console.log('text sent ='+writes))
     }
 
     const onLogout = () => {
       firebase.auth().signOut();
     }
     
-    console.log(user1)
+    //console.log(user)
 
 
-    if (!user1) {
+    if (!user) {
         return (
             <View style={styles.container}>
                 <TextInput style={styles.input} placeholder="Enter your name" value={name} onChangeText={setName} />
@@ -152,7 +119,7 @@ function Chat (props) {
         )
     }
     return (
-        <GiftedChat messages={messages} user1={user1} onSend={handleSend} />
+        <GiftedChat messages={messages} user={user} onSend={handleSend} />
     )
     
 };
@@ -178,7 +145,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
-  posts: store.userState.posts,
-  following: store.userState.following
+  chat: store.userState.currentUser
 })
 export default connect(mapStateToProps, null)(Chat);

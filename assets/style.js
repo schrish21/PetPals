@@ -109,7 +109,8 @@ export default StyleSheet.create({
 	containerMessages: {
 		justifyContent: "space-between",
 		flex: 1,
-		paddingHorizontal: 10
+		paddingHorizontal: 0,
+		marginTop: -20
 	},
 	
 	// CONTAINER - PROFILE

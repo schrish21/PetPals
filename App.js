@@ -4,6 +4,8 @@ import { Text, View } from "react-native";
 import MainScreen from "./containers/Main";
 import HomeScreen from "./containers/Home";
 import MatchesScreen from "./containers/Matches";
+import MessagesScreen from "./containers/Messages";
+import ChatScreen from "./containers/Chat";
 import ProfileScreen from "./containers/Profile";
 
 import SaveScreen from './components/Save';
@@ -92,6 +94,8 @@ export class App extends Component {
                     <Stack.Screen name="Main" component={MainScreen} options={{ headerShown: false}}/>
                     <Stack.Screen name="Home" component={HomeScreen} navigation={this.props.navigation} options={{ headerShown: false}} />
                     <Stack.Screen name="Matches" component={MatchesScreen} navigation={this.props.navigation} options={{ headerShown: false}} />
+                    <Stack.Screen name="Messages" component={MessagesScreen} navigation={this.props.navigation} />
+                    <Stack.Screen name="Chat" component={ChatScreen} navigation={this.props.navigation} />
                     <Stack.Screen name="Profile" component={ProfileScreen} navigation={this.props.navigation} options={{ headerShown: false}}/>
                     <Stack.Screen name="Save" component={SaveScreen} navigation={this.props.navigation}/>
                 </Stack.Navigator>

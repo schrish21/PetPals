@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 import styles from '../assets/style.js';
-import CardStack, { Card } from 'react-native-card-stack-swiper';
 
 const CardMatches = ({
   name,

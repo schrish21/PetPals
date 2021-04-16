@@ -6,14 +6,15 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import HomeScreen from "./Home";
 import MatchesScreen from "./Matches";
+import MessagesScreen from "./Messages";
 import ProfileScreen from "./Profile";
-import CardItem from "../components/CardItem"
+
 
 import firebase from 'firebase' 
 
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { fetchUser, fetchUserPosts, fetchUserFollowing, clearData } from '../redux/actions/index';
+import { bindActionCreators } from 'redux'; 
+import { fetchUser, fetchUserPosts, fetchUserFollowing, fetchUserChat, clearData } from '../redux/actions/index';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -28,6 +29,7 @@ export class Main extends Component {
         this.props.fetchUser();
         this.props.fetchUserPosts();
         this.props.fetchUserFollowing();
+        this.props.fetchUserChat();
     }
 
     render() {
@@ -54,6 +56,16 @@ export class Main extends Component {
                         <MaterialCommunityIcons name="paw" color={color} size={26}/>
                      ),
                 }} />
+                <Tab.Screen name="Messages" component={MessagesScreen} listeners={({ navigation }) => ({
+                        tabPress: event => {
+                            event.preventDefault();
+                            navigation.navigate("Messages", {uid: firebase.auth().currentUser.uid})
+                        }
+                    })}
+                     options={{tabBarIcon:({ color, size }) => (
+                        <MaterialCommunityIcons name="message-text" color={color} size={26}/>
+                     ),
+                }} />
                 <Tab.Screen name="Profile" component={ProfileScreen} listeners={({ navigation }) => ({
                         tabPress: event => {
                             event.preventDefault();
@@ -72,6 +84,6 @@ export class Main extends Component {
 const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser
 })
-const mapDispatchProps = (dispatch) => bindActionCreators({  fetchUser, fetchUserPosts, fetchUserFollowing,  clearData  }, dispatch);
+const mapDispatchProps = (dispatch) => bindActionCreators({  fetchUser, fetchUserPosts, fetchUserFollowing, fetchUserChat, clearData  }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchProps)(Main);

@@ -41,6 +41,12 @@ export class Register extends Component {
                     .collection("userFollowing")
                     .doc(firebase.auth().currentUser.uid)
                     .set({})
+                firebase.firestore()
+                    .collection('chats')
+                    .doc(firebase.auth().currentUser.uid)
+                    .collection('userChat')
+                    .doc(firebase.auth().currentUser.uid)
+                    .set({})
                 console.log(result)
             })
             .catch((error) => {

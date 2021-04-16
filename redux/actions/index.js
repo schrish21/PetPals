@@ -1,4 +1,4 @@
-import {USER_STATE_CHANGE, USER_POSTS_STATE_CHANGE, USER_FOLLOWING_STATE_CHANGE, USERS_DATA_STATE_CHANGE, USERS_POSTS_STATE_CHANGE,  CLEAR_DATA} from '../constants/index'
+import {USER_STATE_CHANGE, USER_POSTS_STATE_CHANGE, USER_FOLLOWING_STATE_CHANGE, USER_CHAT_STATE_CHANGE, USERS_DATA_STATE_CHANGE, USERS_POSTS_STATE_CHANGE,  CLEAR_DATA} from '../constants/index'
 import firebase from 'firebase'
 require('firebase/firestore')
 
@@ -58,6 +58,25 @@ export function fetchUserFollowing() {
                 dispatch({ type: USER_FOLLOWING_STATE_CHANGE, following });
                 for(let i=0; i<following.length; i++){
                     dispatch(fetchUsersData(following[i], true));
+                }
+            })
+    })
+}
+
+export function fetchUserChat() {
+    return ((dispatch) => {
+        firebase.firestore()
+            .collection("chats")
+            .doc(firebase.auth().currentUser.uid)
+            .collection("userChat")
+            .onSnapshot((snapshot) => {
+                let chat = snapshot.docs.map(doc => {
+                    const id = doc.id; 
+                    return id
+                })
+                dispatch({ type: USER_CHAT_STATE_CHANGE, chat });
+                for(let i=0; i<chat.length; i++){
+                    dispatch(fetchUsersData(chat[i], true));
                 }
             })
     })
