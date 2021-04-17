@@ -148,8 +148,8 @@ function Profile (props) {
         .collection('userChat')
         .doc(firebase.auth().currentUser.uid)
         .set({})
-
-        alert('direct to chat')
+        .then(() => alert('direct to chat'))
+        return 0
     }
   }
 
@@ -234,7 +234,7 @@ function Profile (props) {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.roundedButton}>
+          <TouchableOpacity style={styles.roundedButton2}>
             <Text style={styles.iconButton}> 
               <Icon name="cogs"
                     type='font-awesome' 

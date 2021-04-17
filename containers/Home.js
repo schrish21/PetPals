@@ -65,7 +65,6 @@ function Home (props) {
 
         <CardStack
           loop={true}
-          verticalSwipe={false}
           renderNoMoreCards={() => null}
           ref={swiper => (this.swiper = swiper)}
           key={usersMatched.length} 

@@ -31,7 +31,7 @@ export default StyleSheet.create({
 		marginBottom: 15
 	},
 	status: {
-		paddingBottom: 11,
+		paddingBottom: 20,
 		flexDirection: "row",
 		alignItems: "center",
 		fontSize:21
@@ -92,6 +92,28 @@ export default StyleSheet.create({
 		fontSize: 20,
 		color: DARK_GREY,
 		paddingRight: 10
+	},
+
+	// COMPONENT - MESSAGE
+	containerMessage: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "flex-start",
+		flexDirection: "row",
+		paddingHorizontal: 10,
+		width: DIMENSION_WIDTH - 100
+	},
+	avatar: {
+		borderRadius: 30,
+		width: 60,
+		height: 60,
+		marginRight: 20,
+		marginVertical: 15
+	},
+	message: {
+		color: 'gray',
+		fontSize: 12,
+		paddingTop: 5
 	},
 
 	// CONTAINER - HOME
@@ -176,6 +198,16 @@ export default StyleSheet.create({
 		backgroundColor: SECONDARY_COLOR,
 		paddingHorizontal: 20
 	},
+	roundedButton2: {
+		justifyContent: "center",
+		flexDirection: "row",
+		alignItems: "center",
+		marginLeft: 10,
+		height: 50,
+		borderRadius: 25,
+		backgroundColor: '#ff8c00',
+		paddingHorizontal: 20
+	},
 	containerProfileItem: {
 		backgroundColor: 'white',
 		paddingHorizontal: 10,
@@ -217,5 +249,22 @@ export default StyleSheet.create({
 		color: 'gray',
 		fontSize: 13,
 		marginLeft: 20
+	},
+
+	// MENU
+	tabButton: {
+		paddingTop: 20,
+		paddingBottom: 30,
+		alignItems: "center",
+		justifyContent: "center",
+		flex: 1
+	},
+	tabButtonText: {
+		textTransform: "uppercase"
+	},
+	iconMenu: {
+		fontFamily: FONT,
+		height: 20,
+		paddingBottom: 0
 	},
 });
