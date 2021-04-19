@@ -53,7 +53,9 @@ export class Login extends Component {
 
                 <View style = {styles.loginBtn}>
                 <Button
-                    onPress={() => this.onSignIn()}
+                    onPress={() => this.onSignIn()
+                     //this.props.navigation.replace("Loading")
+                   }
                    color = "white"
                     title="Sign In"
                 />

@@ -90,7 +90,9 @@ export class Register extends Component {
 
                 <View style={{marginTop:20, margin:5}}>
                     <Button
-                    onPress={() => this.onSignUp()}
+                    onPress={() => this.onSignUp()
+                 //this.props.navigation.replace("Loading")
+                   }
                     title="Sign Up"
                     color='tomato'
                 /></View>

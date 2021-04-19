@@ -19,7 +19,7 @@ render(){
 
                    <LottieView source = {require ('../../assets/images/lf30_editor_fxub0let.json') } autoPlay
                                  loop = {false}
-                                 speed ={0.5}
+                                 speed ={1.0}
                                  onAnimationFinish={()=>{
                                  this.props.navigation.replace("Login");
                                  }}
