@@ -169,7 +169,7 @@ export default StyleSheet.create({
 		marginLeft: 10,
 		height: 50,
 		borderRadius: 25,
-		backgroundColor: SECONDARY_COLOR,
+		backgroundColor: '#e83f3f',
 		paddingHorizontal: 20
 	},
 	containerProfileItem: {
@@ -236,5 +236,17 @@ export default StyleSheet.create({
         fontFamily: FONT,
         fontSize: 25
     },
+
+    settingsButton: {
+        justifyContent: "center",
+		flexDirection: "row",
+		alignItems: "center",
+		marginLeft: 10,
+		height: 50,
+		borderRadius: 25,
+		backgroundColor: '#e83f3f',
+		paddingHorizontal: 20
+
+    	},
 
 });

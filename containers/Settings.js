@@ -2,17 +2,19 @@ import React, { useState, useEffect, Component } from 'react';;
 import { View,Text,TouchableOpacity, Button, ImageBackground} from 'react-native';
 import { TouchableRipple, Switch } from 'react-native-paper';
 import styles from '../assets/style.js';
+import { Icon } from 'react-native-elements';
+import ContactUs from './ContactUs';
 
 import firebase from 'firebase';
 require('firebase/firestore');
 require('firebase/firebase-storage')
 import { connect } from 'react-redux';
 
-import { Icon } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationEvents } from 'react-navigation';
 
-
-function Settings(props, {navigation}){
-
+function Settings(props){
+const navigation = useNavigation();
     const [HaveNotification, setNotification] = useState(false);
 
     const toggleNotification = () => {
@@ -27,13 +29,22 @@ return(
     <ImageBackground source={require('../assets/images/bg.png')} style={styles.bg}>
         <View style={styles.settingsContainer}>
             <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.settingsGeneral}> Alerts </Text>          
+                <Text style={styles.settingsGeneral}> Alerts </Text>
                     <View style={styles.IconSettings} onPress={() => toggleNotification}>
                         <Switch
+                        trackColor = {{true: '#e83f3f', false: 'grey'}}
                         onValueChange = {toggleNotification}
                         value = {HaveNotification} />
                     </View>
             </View>
+
+            <View>
+                <Text style={styles.settingsGeneral}> Contact Us </Text>
+                  <TouchableOpacity style={styles.roundedButton} onPress={() => navigation.navigate("ContactUs")}>
+                    <Text style={styles.textButton}> Help & Support </Text>
+                 </TouchableOpacity>
+            </View>
+
             <View style={{ flexDirection: 'row' }}>
                 <Text style={styles.settingsGeneral}> Logout </Text>
                     <TouchableOpacity style={styles.IconSettings} onPress={() => onLogout()}>
