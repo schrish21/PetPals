@@ -3,7 +3,6 @@ import { View,Text,TouchableOpacity, Button, ImageBackground} from 'react-native
 import { TouchableRipple, Switch } from 'react-native-paper';
 import styles from '../assets/style.js';
 import { Icon } from 'react-native-elements';
-import ContactUs from './ContactUs';
 
 import firebase from 'firebase';
 require('firebase/firestore');
@@ -14,7 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NavigationEvents } from 'react-navigation';
 
 function Settings(props){
-const navigation = useNavigation();
+    const navigation = useNavigation();
     const [HaveNotification, setNotification] = useState(false);
 
     const toggleNotification = () => {
