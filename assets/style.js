@@ -217,24 +217,27 @@ export default StyleSheet.create({
 
 	// CONTAINER - Settings
     settingsContainer: {
-    		flex: 1,
-    		flexDirection: 'column'
+    	flex: 1,
+    	flexDirection: 'column'
     },
 
     iconButtonLogOut:{
-    		paddingTop:7,
-    		marginLeft:2
+		marginRight: 12,
     },
 
     IconRight: {
-    		width: 40,
-    		height: 70,
-    		marginLeft: 320,
-    		paddingHorizontal:10
-    	},
+    	width: 40,
+    	height: 70,
+    	marginLeft: 320,
+    	paddingHorizontal:10
+    },
+	IconSettings: {
+		flex: 1,
+		flexDirection: 'row-reverse',
+	},
     settingsGeneral:{
         fontFamily: FONT,
-        fontSize: 25
+        fontSize: 25,
     },
 
     settingsButton: {

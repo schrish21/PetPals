@@ -1,5 +1,5 @@
 import React, { useState, useEffect }  from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { Modal, Alert, View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
 
 import styles from '../assets/style.js';
@@ -22,8 +22,8 @@ function CardItem ({
 
   //console.log('current uid from card item = '+ firebase.auth().currentUser.uid)
   //console.log(uid)
-
   //styles
+
   const screenWidth = Dimensions.get('window').width;
 
   const style_Image = [
@@ -43,7 +43,20 @@ function CardItem ({
       paddingBottom: screen ? 5 : 8,
     }
   ];
+  
+  global.num = 1;
 
+  function alertmessage(state) {
+    if (state == 1)
+    {
+      alert('Matched User!')
+    }
+    else if (state == 2)
+    {
+      alert('Removed User!')
+    }
+  }
+  
   const onFollow = () => {
     firebase.firestore()
         .collection("following")
@@ -51,7 +64,7 @@ function CardItem ({
         .collection("userFollowing")
         .doc(uid)
         .set({})
-        .then(() => alert('Matched user!'))
+        .then(() => alertmessage(num))
   }
 
   const onUnfollow = () => {
@@ -61,7 +74,7 @@ function CardItem ({
         .collection("userFollowing")
         .doc(uid)
         .delete()
-        .then(() => alert('Removed user!'))
+        .then(() => alertmessage(num+1))
   }
 
   function LeftClick() {

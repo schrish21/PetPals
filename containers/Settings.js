@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component } from 'react';;
-import { View,Text,TouchableOpacity, Button, ImageBackground} from 'react-native';
+import { Alert, View,Text,TouchableOpacity, Button, ImageBackground} from 'react-native';
 import { TouchableRipple, Switch } from 'react-native-paper';
 import styles from '../assets/style.js';
 import { Icon } from 'react-native-elements';
@@ -18,11 +18,12 @@ function Settings(props){
 
     const toggleNotification = () => {
         setNotification(HaveNotification => !HaveNotification);
+
     }
 
     const onLogout = () => {
             firebase.auth().signOut();
-        }
+    }
 
 return(
     <ImageBackground source={require('../assets/images/bg.png')} style={styles.bg}>
