@@ -150,6 +150,7 @@ function Profile (props) {
         .set({})
         .then(() => alert('direct to chat'))
         return 0
+
     }
   }
 

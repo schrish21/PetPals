@@ -9,7 +9,6 @@ import firebase from 'firebase'
 require('firebase/firestore')
 import { connect } from 'react-redux'
 
-
 function CardItem ({
   name,
   image,
@@ -81,8 +80,10 @@ function CardItem ({
 
       {/*NAME and BIO*/}
       <Image source={image} style={style_Image}/>
-      <Text style={style_Name}>{name}</Text>
-      <Text style={styles.bioCardItem}>{bio}</Text>
+      <View style={{backgroundColor:'#f2e3dc', width: screen ? screenWidth / 2 - 25 : screenWidth - 85, borderRadius: 10, alignContent:'center', alignItems:'center'}}>
+        <Text style={style_Name}>{name}</Text>
+        <Text style={styles.bioCardItem}>{bio}</Text>
+      </View>
 
       {/*BUTTONS*/}
       <View style={styles.actionsCardItem}>

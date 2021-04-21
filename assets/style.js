@@ -17,13 +17,15 @@ export default StyleSheet.create({
 	containerCardItem: {
 		backgroundColor: 'white',
 		borderRadius: 8,
+		borderColor: PRIMARY_COLOR,
+		borderWidth: 3,
 		alignItems: "center",
 		paddingTop: 10,
 		margin: 10,
 		shadowOpacity: 0.05,
 		shadowRadius: 10,
 		shadowColor: 'black',
-		shadowOffset: { height: 0, width: 0 }
+		shadowOffset: { height: 0, width: 0 },
 	},
 	bioCardItem: {
 		color: 'gray',
@@ -101,6 +103,7 @@ export default StyleSheet.create({
 		justifyContent: "flex-start",
 		flexDirection: "row",
 		paddingHorizontal: 10,
+		marginHorizontal: 10,
 		width: DIMENSION_WIDTH - 100
 	},
 	avatar: {
@@ -209,8 +212,7 @@ export default StyleSheet.create({
 		paddingHorizontal: 20
 	},
 	containerProfileItem: {
-		backgroundColor: 'white',
-		paddingHorizontal: 10,
+		backgroundColor:'white',
 		paddingBottom: 25,
 		paddingHorizontal: 45,
 		margin: 20,

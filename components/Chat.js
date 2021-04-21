@@ -112,14 +112,12 @@ function Chat (props) {
 
     if (!user) {
         return (
-            <View style={styles.container}>
-                <TextInput style={styles.input} placeholder="Enter your name" value={name} onChangeText={setName} />
-                <Button onPress={handlePress} title="Enter the chat" />
+            <View>
             </View>
         )
     }
     return (
-        <GiftedChat messages={messages} user={user} onSend={handleSend} />
+        <GiftedChat messages={messages} user={user} onSend={handleSend} renderAvatarOnTop/>
     )
     
 };

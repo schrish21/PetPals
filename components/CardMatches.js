@@ -30,7 +30,7 @@ const CardMatches = ({
   ];
 
   return (
-    <View style={styles.containerCardItem}>
+    <View style={{backgroundColor: '#ede7d5', borderRadius: 8, alignItems: "center", paddingTop: 10, paddingHorizontal:8, marginVertical: 5, marginRight: 5, marginLeft:3, shadowOpacity: 0.05, shadowRadius: 10, shadowColor: 'black', shadowOffset: { height: 0, width: 0 }}}>
       <Image source={image} style={style_Image}/>
       <Text style={style_Name}>{name}</Text>
     </View>

@@ -17,6 +17,15 @@ function Matches (props) {
   const [following, setFollowing] = useState(false)
   const [usersMatched, setUsersMatched] = useState([])
 
+  function arrayRemove(arr, value) { 
+      return arr.filter(function(ele){ 
+          return ele != value; 
+      });
+  }
+
+  var followingFilter = arrayRemove(props.following, props.route.params.uid);
+  //console.log(followingFilter)
+
   useEffect(() => {
       const { currentUser, posts } = props;
 
@@ -46,7 +55,7 @@ function Matches (props) {
 
       firebase.firestore()
         .collection('users')
-        .where('uid', 'in', props.following)
+        .where('uid', 'in', followingFilter)
         .onSnapshot((snapshot) => {
             let usersMatched = snapshot.docs.map(doc => {
                 const data = doc.data();
@@ -58,9 +67,9 @@ function Matches (props) {
 
   }, [props.route.params.uid, props.following])
 
-  console.log(props.following)
+  //console.log(props.following)
   //console.log('folowing =' +following)
-  //console.log(usersMatched)
+  //console.log(props.route.params.uid)
 
   const navigation = useNavigation();  
 
@@ -79,19 +88,19 @@ function Matches (props) {
         horizontal={false}
         renderItem={({ item }) => (
             
-          item.uid != firebase.auth().currentUser.uid ?
+          item.uid != props.route.params.uid ?
           <TouchableOpacity onPress={() => navigation.navigate("Profile", {uid: item.uid, name:item.name})}>
             <CardMatches
-              name={item.uid === firebase.auth().currentUser.uid ? null : item.name}
               image={item.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: item.downloadURL} }
+              name={item.name}
               screen
             />
           </TouchableOpacity>
           : 
-          <View></View>
+          <Text></Text>
 
         )}
-        keyExtractor={(item) => item.title}
+        keyExtractor={(item) => item.name}
       />
     </ImageBackground>
     </View>

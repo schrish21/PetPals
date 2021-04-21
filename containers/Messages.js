@@ -24,8 +24,6 @@ function Messages (props) {
     const [usersChat, setUsersChat] = useState([])
     const [refreshing, setRefreshing] = React.useState(false);
 
-    const [following, setFollowing] = useState(false)
-
     useEffect(() => {
 
         const { currentUser, posts } = props;
@@ -47,14 +45,7 @@ function Messages (props) {
                     }
                 })
         }
-  
-        if (props.following.indexOf(props.route.params.uid) > -1) {
-            setFollowing(true);
-        } else {
-            setFollowing(false);
-        }
-  
-  
+
         firebase.firestore()
           .collection('users')
           .where('uid', 'in', props.chat)
@@ -65,19 +56,20 @@ function Messages (props) {
                   return { id, ...data }
               });
               setUsersChat(usersChat);
-        })
+
+        }) 
   
     }, [props.route.params.uid, props.chat])
   
-    console.log(props.chat)
+    //console.log(props.chat)
     //console.log(usersChat)
 
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
-        firebase.firestore()
+        firebase.firestore() 
             .collection('users')
-            .where('uid', 'in', props.chat)
+            .where('uid', 'in', props.chat || props.route.params.uid)
             .get()
             .then((snapshot) => {
                 let usersChat = snapshot.docs.map(doc => {
@@ -94,37 +86,37 @@ function Messages (props) {
     return (
         <View style={styles.containerMessages}>
         <ImageBackground source={require('../assets/images/bg.png')} style={styles.bg}>
+            <View>
             <ScrollView refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                     
                 <View style={styles.top}>
-                <Text style={{paddingTop:20, paddingBottom: 7, flexDirection: "row", alignItems: "center", fontSize:21}}>Messages</Text>
+                <Text style={{paddingTop:30, paddingBottom: 10, paddingLeft:10, flexDirection: "row", alignItems: "center", fontSize:21}}>Messages</Text>
                 </View>
+            </ScrollView>
 
-                <View style={{ marginHorizontal:10}}>
-                <FlatList
-                    numColumns={1}
-                    data={usersChat}
-                    horizontal={false}
-                    renderItem={({ item }) => (
+            <FlatList
+                numColumns={1}
+                data={usersChat}
+                horizontal={false}
+                renderItem={({ item }) => (
 
-                        item.uid != firebase.auth().currentUser.uid ?
-                        <TouchableOpacity style={{marginTop:10, backgroundColor:'#ede7d5', borderRadius:15}} onPress={() => navigation.navigate("Chat", {uid: props.route.params.uid, uname:user.name, userConversation: item.uid})}>
-                            <Message
-                            image={item.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: item.downloadURL}}
-                            name={item.name}
-                            lastMessage
-                            screen
-                            />
-                        </TouchableOpacity>
-                        : 
-                        <View></View>
-                    )} 
-                    keyExtractor={(item) => item.title}
-                />
-                </View>
-
-                </ScrollView>
+                    item.uid != firebase.auth().currentUser.uid ?
+                    <TouchableOpacity key={item.key} style={{marginTop:10, backgroundColor:'#ede7d5', borderRadius:15, marginHorizontal: 10, flex: 0,
+                    justifyContent: 'flex-end',}} onPress={() => navigation.navigate("Chat", {uid: props.route.params.uid, uname:user.name, userConversation: item.uid})}>
+                        <Message
+                        image={item.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: item.downloadURL}}
+                        name={item.name}
+                        lastMessage
+                        screen
+                        />
+                    </TouchableOpacity>
+                    : 
+                    <View></View>
+                )} 
+                keyExtractor={(item) => item.title}
+            />
+            </View>
         </ImageBackground>
         </View>
     );

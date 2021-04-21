@@ -37,20 +37,9 @@ const Message = ({ image, lastMessage, name, screen }) => {
   );
 };
 
-const PRIMARY_COLOR = "#7444C0";
-const SECONDARY_COLOR = "#5636B8";
-const WHITE = "#FFFFFF";
 const GRAY = "#757E90";
 const DARK_GRAY = "#363636";
-const BLACK = "#000000";
 
-const ONLINE_STATUS = "#46A575";
-const OFFLINE_STATUS = "#D04949";
-
-const STAR_ACTIONS = "#FFA200";
-const LIKE_ACTIONS = "#B644B2";
-const DISLIKE_ACTIONS = "#363636";
-const FLASH_ACTIONS = "#5028D7";
 
 const ICON_FONT = tinderclone;
 

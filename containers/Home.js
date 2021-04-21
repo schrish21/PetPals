@@ -50,7 +50,7 @@ function Home (props) {
 
   //fetchUsers();
   //console.log(users)
-  console.log(usersMatched)
+  //console.log(usersMatched)
   //console.log(firebase.auth().currentUser)
 
 
