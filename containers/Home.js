@@ -3,6 +3,7 @@ import {Image, Button, ScrollView, View, Text, ImageBackground, TouchableOpacity
 import CardStack, { Card } from 'react-native-card-stack-swiper';
 import CardItem from '../components/CardItem';
 import styles from '../assets/style.js';
+import * as fromAuth from '../components/CardItem';
 
 import { Icon } from 'react-native-elements';
 
@@ -80,6 +81,8 @@ function Home (props) {
               actions
               onPressLeft={() => this.swiper.swipeRight()}
               onPressRight={() => this.swiper.swipeLeft()}
+              onSwipedLeft={() => LeftClick()}
+              onSwipedRight={() => RightClick()}
               />
             </Card>
           ))}

@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons'; 
 
 import HomeScreen from "./Home";
 import MatchesScreen from "./Matches";
 import MessagesScreen from "./Messages";
 import ProfileScreen from "./Profile";
+import SettingsScreen from "./Settings";
+import CardItem from "../components/CardItem";
+import MoreInfoScreen from "./MoreInfo";
 
-
-import firebase from 'firebase' 
+import firebase from 'firebase';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'; 
@@ -76,6 +79,7 @@ export class Main extends Component {
                         <MaterialCommunityIcons name="account-circle" color={color} size={26}/>
                     ),
                 }} />
+
             </Tab.Navigator>
         )
     }

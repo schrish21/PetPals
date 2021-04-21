@@ -14,6 +14,12 @@ export default StyleSheet.create({
 
 
 	// COMPONENT - CARD ITEM
+	container: {
+		flex: 1,
+		backgroundColor: '#fff',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
 	containerCardItem: {
 		backgroundColor: 'white',
 		borderRadius: 8,
@@ -32,11 +38,15 @@ export default StyleSheet.create({
 		textAlign: "center",
 		marginBottom: 15
 	},
+	Contact: {
+		color: 'gray',
+		textAlign: "center",
+	},
 	status: {
 		paddingBottom: 20,
 		flexDirection: "row",
 		alignItems: "center",
-		fontSize:21
+		fontSize:30
 	},
 	statusText: {
 		color: 'gray',
@@ -88,7 +98,10 @@ export default StyleSheet.create({
 		justifyContent: "space-between",
 		alignItems: "center"
 	},
-	title: { paddingBottom: 10, fontSize: 22, color: DARK_GREY },
+	title: { 
+		paddingBottom: 10, 
+		fontSize: 22, 
+		color: DARK_GREY },
 	icon: {
 		fontFamily: FONT,
 		fontSize: 20,
@@ -144,15 +157,6 @@ export default StyleSheet.create({
 		width: DIMENSION_WIDTH,
 		height: 410
 	},
-	topIconRight: {
-		color: 'white',
-		width: 40,
-		height: 40,
-		borderRadius: 25,
-		backgroundColor: 'white',
-		marginLeft: 320,
-		paddingHorizontal:10
-	},
 	actionsProfile: {
 		justifyContent: "center",
 		flexDirection: "row",
@@ -162,10 +166,10 @@ export default StyleSheet.create({
 		fontFamily: FONT, 
 		fontSize: 20, 
 		color: 'white' 
-	},	
-	iconButtonLogOut:{
-		paddingTop:7,
-		marginLeft:2
+	},
+	iconButtonSettings:{
+		paddingTop:8,
+		marginLeft:-1
 	},
 	textButton: {
 		fontFamily: FONT,
@@ -198,7 +202,7 @@ export default StyleSheet.create({
 		marginLeft: 10,
 		height: 50,
 		borderRadius: 25,
-		backgroundColor: SECONDARY_COLOR,
+		backgroundColor: '#e83f3f',
 		paddingHorizontal: 20
 	},
 	roundedButton2: {
@@ -269,4 +273,41 @@ export default StyleSheet.create({
 		height: 20,
 		paddingBottom: 0
 	},
+	// CONTAINER - Settings
+    settingsContainer: {
+    	flex: 1,
+    	flexDirection: 'column'
+    },
+
+    iconButtonLogOut:{
+		marginRight: 12,
+    },
+
+    IconRight: {
+    	width: 40,
+    	height: 70,
+    	marginLeft: 320,
+    	paddingHorizontal:10
+    },
+	IconSettings: {
+		flex: 1,
+		flexDirection: 'row-reverse',
+	},
+    settingsGeneral:{
+        fontFamily: FONT,
+        fontSize: 25,
+    },
+
+    settingsButton: {
+        justifyContent: "center",
+		flexDirection: "row",
+		alignItems: "center",
+		marginLeft: 10,
+		height: 50,
+		borderRadius: 25,
+		backgroundColor: '#e83f3f',
+		paddingHorizontal: 20
+
+    	},
+
 });

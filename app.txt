@@ -1,80 +1,41 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import {ScrollView, View, Text, TouchableOpacity, ImageBackground, FlatList, KeyboardAvoidingView, Button, LogBox, StyleSheet, TextInput, } from 'react-native';
-import { GiftedChat } from 'react-native-gifted-chat';
-import AsyncStorage from '@react-native-community/async-storage';
-
-import CardMatches from '../components/CardMatches';
-
-import { useNavigation } from '@react-navigation/native';
-import { NavigationEvents } from 'react-navigation';
+import React, { useState, useEffect, Component } from 'react';;
+import { View,Text,TouchableOpacity, Button, ImageBackground} from 'react-native';
+import { TouchableRipple, Switch } from 'react-native-paper';
+import styles from '../assets/style.js';
 
 import firebase from 'firebase';
 require('firebase/firestore');
+require('firebase/firebase-storage')
 import { connect } from 'react-redux';
 
-const firebaseConfig = {
-    apiKey: "AIzaSyCpM6VHskV5zxbZPEUcGzTAiZCePrG2H3E",
-    authDomain: "pet-pals-38237.firebaseapp.com",
-    projectId: "pet-pals-38237",
-    storageBucket: "pet-pals-38237.appspot.com",
-    messagingSenderId: "847823690219",
-    appId: "1:847823690219:web:c3b275979f6333ca74a1ae"
-}
-  
-if (firebase.apps.length === 0) {
-    firebase.initializeApp(firebaseConfig)
-}
-
-LogBox.ignoreLogs(['Setting a timer for a long period of time'])
-  
+import { Icon } from 'react-native-elements';
 
 
-function Chat (props) {
-
-    const [user, setUser] = useState(null);
-    const [following, setFollowing] = useState(false)
+function Settings(props, {navigation}){
+  const [user, setUser] = useState(null);
+    const [following, setFollowing] = useState([])
     const [usersMatched, setUsersMatched] = useState([])
+    const [HaveNotification, setNotification] = useState(false);
 
-    const [user1, setUser1] = useState(null)
-    const [name, setName] = useState('')
-    const [messages, setMessages] = useState([])
-
-    const chatsRef = firebase.firestore().collection('chats').doc(props.route.params.uid).collection('userChat').doc('XpwIBoloZGaPbSMmlSKs4ISyTZv1').collection('conversation')
+    const toggleNotification = () => {
+        setNotification(!HaveNotification);
+    }
 
     useEffect(() => {
-        const { currentUser, posts } = props;
 
-        if (props.route.params.uid === firebase.auth().currentUser.uid) {
-            setUser(currentUser)
-
-        }
-        else {
+      firebase.firestore()
+        .collection("following")
+        .doc(firebase.auth().currentUser.uid)
+        .collection("userFollowing")
+        .onSnapshot((snapshot) => {
+            let following = snapshot.docs.map(doc => {
+                const id = doc.id;
+                return id
+            })
+            setFollowing(following);
             firebase.firestore()
-                .collection("users")
-                .doc(props.route.params.uid)
-                .get()
-                .then((snapshot) => {
-                    if (snapshot.exists) {
-                        setUser(snapshot.data());
-                        setUser1(snapshot.data());
-                    }
-                    else {
-                        console.log('does not exist')
-                    }
-                })
-        }
-
-
-
-        if (props.following.indexOf(props.route.params.uid) > -1) {
-            setFollowing(true);
-        } else {
-            setFollowing(false);
-        }
-
-        firebase.firestore()
             .collection('users')
-            .where('uid', 'in', props.following)
+            .where('uid', 'not-in', following)
             .get()
             .then((snapshot) => {
                 let usersMatched = snapshot.docs.map(doc => {
@@ -83,102 +44,57 @@ function Chat (props) {
                     return { id, ...data }
                 });
                 setUsersMatched(usersMatched);
+          })
+
+
         })
 
-        //handlePress() 
-        //readUser()
-
-        const unsubscribe = chatsRef.onSnapshot((querySnapshot) => {
-            const messagesFirestore = querySnapshot
-                .docChanges()
-                .filter(({ type }) => type === 'added')
-                .map(({ doc }) => {
-                    const message = doc.data()
-                    //createdAt is firebase.firestore.Timestamp instance
-                    //https://firebase.google.com/docs/reference/js/firebase.firestore.Timestamp
-                    return { ...message, createdAt: message.createdAt.toDate() }
-                })
-                .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
-            appendMessages(messagesFirestore)
-        })
-        return () => unsubscribe()
-
-    }, [props.route.params.uid, props.following])
-
-    //console.log(props.following)
-    //console.log('folowing =' +following)
-    //console.log(usersMatched)
-    
-
-    const appendMessages = useCallback(
-        (messages) => {
-            setMessages((previousMessages) => GiftedChat.append(previousMessages, messages))
-        },
-        [messages]
-    )
-
-    async function readUser() {
-        const user1 = await AsyncStorage.getItem('user1')
-        if (user1) {
-            setUser1(JSON.parse(user1))
-        }
-    }
-    async function handlePress() {
-        const _id = user.uid
-        const name = user.name
-        const user1 = { _id, name }
-        await AsyncStorage.setItem('user', JSON.stringify(user1))
-        setUser1(user1)
-    }
-    async function handleSend(messages) {
-        handlePress()
-        const writes = messages.map((m) => chatsRef.add(m))
-        await Promise.all(writes)
-    }
+        }, [])
 
     const onLogout = () => {
-      firebase.auth().signOut();
-    }
-    
-    console.log(user1)
+            firebase.auth().signOut();
+        }
 
-
-    if (!user1) {
-        return (
-            <View style={styles.container}>
-                <TextInput style={styles.input} placeholder="Enter your name" value={name} onChangeText={setName} />
-                <Button onPress={handlePress} title="Enter the chat" />
+return(
+    <ImageBackground source={require('../assets/images/bg.png')} style={styles.bg}>
+        <View style={styles.settingsContainer}>
+            <View style={styles.top}>
+                <Text style={styles.status}>Settings</Text>
             </View>
-        )
-    }
-    return (
-        <GiftedChat messages={messages} user1={user1} onSend={handleSend} />
-    )
-    
+            <View>
+                <Text style={styles.settingsGeneral}> Notification </Text>
+            </View>
+            <View>
+                <TouchableRipple onPress={() => toggleNotification}>
+                    <View style={styles.IconRight} pointerEvents="none">
+                        <Switch value = {HaveNotification} />
+                    </View>
+                </TouchableRipple>
+            </View>
+            <View>
+                <Text style={styles.settingsGeneral}> Logout </Text>
+
+                    <TouchableOpacity onPress={() => onLogout()} style={styles.IconRight} >
+                        <Text style={styles.iconButtonLogOut}>
+                            <Icon name='sign-out'
+                                type='font-awesome'
+                                color='tomato'
+                                size={22} />
+                        </Text>
+                    </TouchableOpacity>
+
+           </View>
+        </View>
+       </ImageBackground>
+    );
 };
 
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 30,
-    },
-    input: {
-        height: 50,
-        width: '100%',
-        borderWidth: 1,
-        padding: 15,
-        marginBottom: 20,
-        borderColor: 'gray',
-    },
+const mapStateToProps = (store) => ({
+    currentUser: store.userState.currentUser,
+    posts: store.userState.posts,
+    following: store.userState.following
 })
 
-const mapStateToProps = (store) => ({
-  currentUser: store.userState.currentUser,
-  posts: store.userState.posts,
-  following: store.userState.following
-})
-export default connect(mapStateToProps, null)(Chat);
+
+export default connect(mapStateToProps, null)(Settings);
