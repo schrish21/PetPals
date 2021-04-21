@@ -75,7 +75,7 @@ function Home (props) {
             <Card key={index}>
               <CardItem
               image={item.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: item.downloadURL} }
-              //name={item.name}
+              name={item.name}
               bio={item.bio}
               uid={item.uid}
               matches={'m'}
