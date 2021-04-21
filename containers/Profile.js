@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, Button, ScrollView, View, Text, ImageBackground, TouchableOpacity, RefreshControl,} from 'react-native';
+import { Image, Button, ScrollView, View, LogBox, Text, ImageBackground, TouchableOpacity, RefreshControl,} from 'react-native';
 import styles from '../assets/style.js';
 import { Icon } from 'react-native-elements';
 
@@ -13,6 +13,8 @@ import { NavigationEvents } from 'react-navigation';
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
+
+LogBox.ignoreAllLogs()
 
 function Profile (props) {
 

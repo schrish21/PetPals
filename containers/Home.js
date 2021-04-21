@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Image, Button, ScrollView, View, Text, ImageBackground, TouchableOpacity, FlatList } from 'react-native';
+import {Image, Button, ScrollView, View, LogBox, Text, ImageBackground, TouchableOpacity, FlatList } from 'react-native';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
 import CardItem from '../components/CardItem';
 import styles from '../assets/style.js';
@@ -11,6 +11,7 @@ import firebase from 'firebase';
 require('firebase/firestore');
 import { connect } from 'react-redux';
 
+LogBox.ignoreAllLogs()
 
 function Home (props) {
 
@@ -50,7 +51,7 @@ function Home (props) {
 
   //fetchUsers();
   //console.log(users)
-  console.log(usersMatched)
+  //console.log(usersMatched)
   //console.log(firebase.auth().currentUser)
 
 
