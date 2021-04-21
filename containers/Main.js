@@ -10,6 +10,7 @@ import MatchesScreen from "./Matches";
 import ProfileScreen from "./Profile";
 import SettingsScreen from "./Settings";
 import CardItem from "../components/CardItem";
+import MoreInfoScreen from "./MoreInfo";
 
 import firebase from 'firebase';
 

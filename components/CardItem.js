@@ -9,6 +9,8 @@ import firebase from 'firebase'
 require('firebase/firestore')
 import { connect } from 'react-redux'
 
+import { useNavigation } from '@react-navigation/native';
+import { NavigationEvents } from 'react-navigation';
 
 function CardItem ({
   name,
@@ -25,6 +27,7 @@ function CardItem ({
   //styles
 
   const screenWidth = Dimensions.get('window').width;
+  const navigation = useNavigation();
 
   const style_Image = [
     {
@@ -109,7 +112,7 @@ function CardItem ({
 
       {/*BUTTONS*/}
       <View style={styles.actionsCardItem}>
-          <TouchableOpacity style={styles.miniButton}>
+          <TouchableOpacity style={styles.miniButton} onPress={() => navigation.navigate("MoreInfo",{uid})}>
             <Text style={styles.star}>
               <Icon reverseColor
                   name='star'
@@ -157,5 +160,7 @@ function CardItem ({
 
 const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
+  posts: store.userState.posts,
+  following: store.userState.following
 })
 export default connect(mapStateToProps, null)(CardItem);
