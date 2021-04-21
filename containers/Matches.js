@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../assets/style.js';
-import {ScrollView, View, Text, TouchableOpacity, ImageBackground, FlatList} from 'react-native';
+import {ScrollView, View, Text, TouchableOpacity, ImageBackground, LogBox, FlatList} from 'react-native';
 import CardMatches from '../components/CardMatches';
 
 import firebase from 'firebase';
@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationEvents } from 'react-navigation';
 
+LogBox.ignoreAllLogs()
 
 function Matches (props) {
 
@@ -58,10 +59,6 @@ function Matches (props) {
       })
 
   }, [props.route.params.uid, props.following])
-
-  console.log(props.following)
-  //console.log('folowing =' +following)
-  //console.log(usersMatched)
 
   const navigation = useNavigation();  
 

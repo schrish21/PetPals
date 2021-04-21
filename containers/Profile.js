@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Image, Button, ScrollView, View, Text, ImageBackground, TouchableOpacity, RefreshControl,} from 'react-native';
+import { Image, Button, ScrollView, View, LogBox, Text, ImageBackground, TouchableOpacity, RefreshControl,} from 'react-native';
 import styles from '../assets/style.js';
-
 import { Icon } from 'react-native-elements';
 
 import firebase from 'firebase';
@@ -14,6 +13,8 @@ import { NavigationEvents } from 'react-navigation';
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
+
+LogBox.ignoreAllLogs()
 
 function Profile (props) {
 
@@ -68,10 +69,6 @@ function Profile (props) {
 
   //console.log(user)
 
-  const onLogout = () => {
-      firebase.auth().signOut();
-  }
-
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
@@ -96,8 +93,8 @@ function Profile (props) {
         <Button title="Logout" onPress={() => onLogout()}/>
         <Text>Empty</Text>
       </View>
-    )      
-  } 
+    )
+  }
 
   const navigation = useNavigation();
 
@@ -129,22 +126,13 @@ function Profile (props) {
           />
         }>
 
-        
+
         <ImageBackground source={user.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: user.downloadURL} } style={styles.photo}>
           <View style={styles.top}>
-            {props.route.params.uid == firebase.auth().currentUser.uid ? (
-            <TouchableOpacity onPress={() => onLogout()} style={styles.topIconRight}>
-              <Text style={styles.iconButtonLogOut}> 
-                <Icon name='sign-out'
-                      type='font-awesome' 
-                      color='tomato'
-                      size={22} />
-                </Text>
-              </TouchableOpacity> 
-            ): null}
-          </View> 
+
+          </View>
         </ImageBackground>
-          
+
 
         <View>
           <View style={styles.containerProfileItem}>
@@ -197,17 +185,18 @@ function Profile (props) {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.roundedButton}>
-            <Text style={styles.iconButton}> 
+          <TouchableOpacity style={styles.roundedButton} onPress={() => navigation.navigate("Settings")}>
+            <Text style={styles.iconButton}>
               <Icon name="cogs"
-                    type='font-awesome' 
+                    type='font-awesome'
                     color='white'
                     size={28} />
             </Text>
-            <Text style={styles.textButton}> Edit Profile</Text>
+            <Text style={styles.textButton}> Settings </Text>
           </TouchableOpacity>
-        </View> 
-        ): 
+
+        </View>
+        ):
         <View style={styles.actionsProfile}>
           <TouchableOpacity style={styles.circledButtonX}>
             <Text style={styles.iconButton}>
@@ -230,7 +219,7 @@ function Profile (props) {
           </TouchableOpacity>
         </View>
         }
-      
+
       </ScrollView>
     </ImageBackground>
   );
