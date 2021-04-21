@@ -36,6 +36,10 @@ export default StyleSheet.create({
 		textAlign: "center",
 		marginBottom: 15
 	},
+	Contact: {
+		color: 'gray',
+		textAlign: "center",
+	},
 	status: {
 		paddingBottom: 11,
 		flexDirection: "row",
@@ -92,7 +96,10 @@ export default StyleSheet.create({
 		justifyContent: "space-between",
 		alignItems: "center"
 	},
-	title: { paddingBottom: 10, fontSize: 22, color: DARK_GREY },
+	title: { 
+		paddingBottom: 10, 
+		fontSize: 22, 
+		color: DARK_GREY },
 	icon: {
 		fontFamily: FONT,
 		fontSize: 20,

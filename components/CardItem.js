@@ -46,6 +46,15 @@ function CardItem ({
   
   global.num = 1;
 
+  if (num == 3)
+  {
+    global.num = 3;
+  }
+  else if (num == 1) 
+  {
+    global.num = 1;
+  }
+
   function alertmessage(state) {
     if (state == 1)
     {

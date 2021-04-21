@@ -18,7 +18,16 @@ function Settings(props){
 
     const toggleNotification = () => {
         setNotification(HaveNotification => !HaveNotification);
-
+        if (num == 1)
+        {
+            global.num = 3;
+            Alert.alert('Title',num);
+        }
+        else if (num == 3)
+        {
+            global.num = 1;
+            alert(num);
+        }
     }
 
     const onLogout = () => {
