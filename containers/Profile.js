@@ -26,66 +26,54 @@ function Profile (props) {
   const [usersChat, setUsersChat] = useState([])
   const [refreshing, setRefreshing] = React.useState(false);
 
-  //console.log(props.route.params.name)
-
   useEffect(() => {
-      const { currentUser, posts } = props;
+    const { currentUser, posts } = props;
 
-      if (props.route.params.uid === firebase.auth().currentUser.uid) {
-          setUser(currentUser)
-          setUserPosts(posts)
-      }
-      else {
-          firebase.firestore()
-              .collection("users")
-              .doc(props.route.params.uid)
-              .get()
-              .then((snapshot) => {
-                  if (snapshot.exists) {
-                      setUser(snapshot.data());
-                  }
-                  else {
-                      console.log('does not exist')
-                  }
-              })
-          firebase.firestore()
-              .collection("users")
-              .doc(props.route.params.uid)
-              .collection("userPosts")
-              .orderBy("creation", "desc")
-              .get()
-              .then((snapshot) => {
-                  let posts = snapshot.docs.map(doc => {
-                      const data = doc.data();
-                      const id = doc.id;
-                      return { id, ...data }
-                  })
-                  setUserPosts(posts)
-              })
-
-          firebase.firestore()
-              .collection('users')
-              .where('uid', 'in', props.chat)
-              .get()
-              .then((snapshot) => {
-                  let usersChat = snapshot.docs.map(doc => {
-                      const data = doc.data();
-                      const id = doc.id;
-                      return { id, ...data }
-                  });
-                  setUsersChat(usersChat);
+    if (props.route.params.uid === firebase.auth().currentUser.uid) {
+        setUser(currentUser)
+        setUserPosts(posts)
+    }
+    else {
+        firebase.firestore()
+            .collection("users")
+            .doc(props.route.params.uid)
+            .get()
+            .then((snapshot) => {
+                if (snapshot.exists) {
+                    setUser(snapshot.data());
+                }
+                else {
+                    console.log('does not exist')
+                }
+            })
+        firebase.firestore()
+            .collection("users")
+            .doc(props.route.params.uid)
+            .collection("userPosts")
+            .orderBy("creation", "desc")
+            .get()
+            .then((snapshot) => {
+                let posts = snapshot.docs.map(doc => {
+                    const data = doc.data();
+                    const id = doc.id;
+                    return { id, ...data }
+                })
+                setUserPosts(posts)
             })
       }
-
-      if (props.following.indexOf(props.route.params.uid) > -1) {
-          setFollowing(true);
-      } else {
-          setFollowing(false);
-      }
-
+      firebase.firestore()
+      .collection('users')
+      .where('uid', 'in', props.chat)
+      .onSnapshot((snapshot) => {
+          let usersChat = snapshot.docs.map(doc => {
+              const data = doc.data();
+              const id = doc.id;
+              return { id, ...data }
+          });
+          setUsersChat(usersChat);
+      }) 
   }, [props.route.params.uid, props.following])
 
-  //console.log(user)
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -106,10 +94,8 @@ function Profile (props) {
 
   if (user === null) {
     return (
-      <View>
-        <Text></Text>
+      <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
         <Button title="Logout" onPress={() => onLogout()}/>
-        <Text>Empty</Text>
       </View>
     )
   }
@@ -128,7 +114,7 @@ function Profile (props) {
 
   const startChat = () => {
     if(props.chat.includes(props.route.params.uid)){
-      alert('chat already exists')
+      navigation.navigate("Chat", {uid: firebase.auth().currentUser.uid, uname:user.name, userConversation: user.uid})
     }
     else{
       firebase.firestore()
@@ -143,9 +129,8 @@ function Profile (props) {
         .collection('userChat')
         .doc(firebase.auth().currentUser.uid)
         .set({})
-        .then(() => alert('direct to chat'))
+        .then(() => navigation.navigate("Chat", {uid: firebase.auth().currentUser.uid, uname:user.name, userConversation: user.uid}))
         return 0
-
     }
   }
 
@@ -154,54 +139,55 @@ function Profile (props) {
       source={require('../assets/images/bg.png')}
       style={styles.bg}
     >
-      
       <ScrollView style={styles.containerProfile} refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
-        }>
-
-
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />
+      }>
         <ImageBackground source={user.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: user.downloadURL} } style={styles.photo}>
           <View style={styles.top}>
-
           </View>
         </ImageBackground>
 
-
         <View>
-          <View style={styles.containerProfileItem}>
+        <View style={styles.containerProfileItem}>
               <View>
                 <Text style={styles.name}>{user.name}</Text>
                 <Text style={styles.descriptionProfileItem}>{user.gender}</Text>
               </View>
-
               <View style={styles.info}>
                 <Text style={styles.iconProfile}>
                   <Icon name='paw'
-                        type='font-awesome' 
+                        type='font-awesome'
                         color='#474745'
                         size={20}
                         />
                 </Text>
                 <Text style={styles.infoContent}>{user.breed}</Text>
             </View>
-
-          <View style={styles.info}>
-            <Text style={styles.iconProfile}>
-              <Icon name="calendar"
-                    type='font-awesome' 
-                    color='#474745'
-                    size={20} />
-            </Text>
-            <Text style={styles.infoContent}>{user.age} years old</Text>
-          </View>
-
+            <View style={styles.info}>
+              <Text style={styles.iconProfile}>
+                <Icon name="calendar"
+                      type='font-awesome'
+                      color='#474745'
+                      size={20} />
+              </Text>
+              <Text style={styles.infoContent}>{user.age} years old</Text>
+            </View>
+            <View style={styles.info}>
+              <Text style={styles.iconProfile2}>
+                <Icon name="user"
+                      type='font-awesome'
+                      color='#474745'
+                      size={21} />
+              </Text>
+              <Text style={styles.infoContent}>{user.oname}'s Pet</Text>
+            </View>
             <View style={styles.info}>
                 <Text style={styles.iconProfile}>
                   <Icon name='hashtag'
-                        type='font-awesome' 
+                        type='font-awesome'
                         color='#474745'
                         size={20} />
                 </Text>
@@ -213,14 +199,13 @@ function Profile (props) {
         {props.route.params.uid == firebase.auth().currentUser.uid ? (
         <View style={styles.actionsProfile}>
           <TouchableOpacity style={styles.circledButton} onPress={() => navigation.navigate("Save")}>
-            <Text style={styles.iconButton}>
+            <Text style={styles.iconButtonX}>
               <Icon name='camera'
                   type='font-awesome' 
                   color='white'
-                  size={26} />
+                  size={28} />
             </Text>
           </TouchableOpacity>
-
           <TouchableOpacity style={styles.roundedButton2} onPress={() => navigation.navigate("Settings")}>
             <Text style={styles.iconButton}>
               <Icon name="cogs"
@@ -230,8 +215,8 @@ function Profile (props) {
             </Text>
             <Text style={styles.textButton}> Settings </Text>
           </TouchableOpacity>
-
         </View>
+
         ):
         <View style={styles.actionsProfile}>
           <TouchableOpacity style={styles.circledButtonX} onPress={()=> onUnfollow()}>
@@ -242,16 +227,16 @@ function Profile (props) {
                   color='white'
                   size={26} />
             </Text>
+            <Text style={{fontSize: 16,color: 'white', paddingLeft: 5}}>Remove</Text>
           </TouchableOpacity>
-          
           <TouchableOpacity style={styles.roundedButton} onPress={() => startChat()}>
             <Text style={styles.iconButton}> 
               <Icon name="comments-o"
                     type='font-awesome' 
-                    color='white'
+                    color='black'
                     size={28} />
             </Text>
-            <Text style={styles.textButton}>Start chatting</Text>
+            <Text style={{fontSize: 16,color: 'black', paddingLeft: 5}}> Start chatting</Text>
           </TouchableOpacity>
         </View>
         }

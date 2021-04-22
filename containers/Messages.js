@@ -91,7 +91,7 @@ function Messages (props) {
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                     
                 <View style={styles.top}>
-                <Text style={{paddingTop:30, paddingBottom: 10, paddingLeft:10, flexDirection: "row", alignItems: "center", fontSize:21}}>Messages</Text>
+                <Text style={{paddingTop:30, paddingBottom: 30, paddingLeft:10, flexDirection: "row", alignItems: "center", fontSize:21}}>Messages</Text>
                 </View>
             </ScrollView>
 
@@ -102,8 +102,8 @@ function Messages (props) {
                 renderItem={({ item }) => (
 
                     item.uid != firebase.auth().currentUser.uid ?
-                    <TouchableOpacity key={item.key} style={{marginTop:10, backgroundColor:'#ede7d5', borderRadius:15, marginHorizontal: 10, flex: 0,
-                    justifyContent: 'flex-end',}} onPress={() => navigation.navigate("Chat", {uid: props.route.params.uid, uname:user.name, userConversation: item.uid})}>
+                    <TouchableOpacity key={item.key} style={{marginTop:10, backgroundColor:'#cfe2ff', borderRadius:15, marginHorizontal: 10, flex: 0, justifyContent: 'flex-end',}} 
+                    onPress={() => navigation.navigate("Chat", {uid: props.route.params.uid, uname:user.name, userConversation: item.uid})}>
                         <Message
                         image={item.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: item.downloadURL}}
                         name={item.name}

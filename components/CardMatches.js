@@ -2,17 +2,27 @@ import React from 'react';
 import { View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 import styles from '../assets/style.js';
 
-const CardMatches = ({
-  name,
-  image,
-  screen
-}) => {
-  
-  //styles
+const CardMatches = ({name, image, screen}) => {
+
   const screenWidth = Dimensions.get('window').width;
 
-  const style_Image = [
-    {
+  const style_Container = [{
+    backgroundColor: '#b8d6cb',
+    borderRadius: 8, 
+    alignItems: "center", 
+    paddingTop: 10, 
+    paddingHorizontal:8, 
+    marginVertical: 5, 
+    marginRight: 5, 
+    marginLeft:0, 
+    shadowOpacity: 0.05, 
+    shadowRadius: 10, 
+    shadowColor: 'black', 
+    shadowOffset: { height: 0, width: 0 }
+    }
+  ];
+
+  const style_Image = [{
       width: screen ? screenWidth / 2 - 25 : screenWidth - 85,
       height: screen ? 170 : 350,
       borderRadius: 0,
@@ -20,17 +30,16 @@ const CardMatches = ({
     }
   ];
 
-  const style_Name = [
-    {
+  const style_Name = [{
       color: '#363636',
-      fontSize: screen ? 15 : 30,
+      fontSize: 16,
       paddingTop: screen ? 11 : 13,
       paddingBottom: screen ? 5 : 8,
     }
   ];
 
   return (
-    <View style={{backgroundColor: '#ede7d5', borderRadius: 8, alignItems: "center", paddingTop: 10, paddingHorizontal:8, marginVertical: 5, marginRight: 5, marginLeft:3, shadowOpacity: 0.05, shadowRadius: 10, shadowColor: 'black', shadowOffset: { height: 0, width: 0 }}}>
+    <View style={style_Container}>
       <Image source={image} style={style_Image}/>
       <Text style={style_Name}>{name}</Text>
     </View>

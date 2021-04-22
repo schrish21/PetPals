@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NavigationEvents } from 'react-navigation';
 
 function Settings(props){
+
     const navigation = useNavigation();
     const [HaveNotification, setNotification] = useState(false);
 
@@ -25,48 +26,42 @@ function Settings(props){
             firebase.auth().signOut();
     }
 
-return(
-    <ImageBackground source={require('../assets/images/bg.png')} style={styles.bg}>
-        <View style={styles.settingsContainer}>
-            <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.settingsGeneral}> Alerts </Text>
-                    <View style={styles.IconSettings} onPress={() => toggleNotification}>
-                        <Switch
-                        trackColor = {{true: '#e83f3f', false: 'grey'}}
-                        onValueChange = {toggleNotification}
-                        value = {HaveNotification} />
-                    </View>
-            </View>
-
-            <View>
-                <Text style={styles.settingsGeneral}> Contact Us </Text>
-                  <TouchableOpacity style={styles.roundedButton} onPress={() => navigation.navigate("ContactUs")}>
-                    <Text style={styles.textButton}> Help & Support </Text>
-                 </TouchableOpacity>
-            </View>
-
-            <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.settingsGeneral}> Logout </Text>
-                    <TouchableOpacity style={styles.IconSettings} onPress={() => onLogout()}>
-                        <Text style={styles.iconButtonLogOut}>
-                            <Icon name='sign-out'
-                                type='font-awesome'
-                                color='tomato'
-                                size={22} />
-                        </Text>
+    return(
+        <ImageBackground source={require('../assets/images/bg.png')} style={styles.bg}>
+            <View style={styles.settingsContainer}>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={styles.settingsGeneral}> Alerts </Text>
+                        <View style={styles.IconSettings} onPress={() => toggleNotification}>
+                            <Switch
+                            trackColor = {{true: '#e83f3f', false: 'grey'}}
+                            onValueChange = {toggleNotification}
+                            value = {HaveNotification} />
+                        </View>
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={styles.settingsGeneral}> Logout </Text>
+                        <TouchableOpacity style={styles.IconSettings} onPress={() => onLogout()}>
+                            <Text style={styles.iconButtonLogOut}>
+                                <Icon name='sign-out'
+                                      type='font-awesome'
+                                      color='tomato'
+                                      size={35} />
+                            </Text>
+                        </TouchableOpacity>
+                </View>
+                <View style={{ marginTop:350 }}>
+                    <Text style={styles.settingsGeneral}> Contact Us </Text>
+                    <TouchableOpacity style={styles.roundedButton3} onPress={() => navigation.navigate("ContactUs")}>
+                        <Text style={styles.textButton}> Help & Support </Text>
                     </TouchableOpacity>
+                </View>
             </View>
-        </View>
-       </ImageBackground>
+        </ImageBackground>
     );
 };
 
 
 const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser,
-    posts: store.userState.posts,
-    following: store.userState.following
 })
-
-
 export default connect(mapStateToProps, null)(Settings);

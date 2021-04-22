@@ -3,8 +3,6 @@ import {ScrollView, View, Text, TouchableOpacity, ImageBackground, FlatList, Key
 import { GiftedChat } from 'react-native-gifted-chat';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import CardMatches from '../components/CardMatches';
-
 import { useNavigation } from '@react-navigation/native';
 import { NavigationEvents } from 'react-navigation';
 
@@ -26,7 +24,6 @@ if (firebase.apps.length === 0) {
 }
 
 LogBox.ignoreLogs(['Setting a timer for a long period of time'])
-  
 
 
 function Chat (props) {
@@ -58,9 +55,6 @@ function Chat (props) {
             setUser(user)
         }
 
-        //handlePress() 
-        //readUser()
-
         const unsubscribe = chatsRef.onSnapshot((querySnapshot) => {
             const messagesFirestore = querySnapshot
                 .docChanges()
@@ -90,8 +84,8 @@ function Chat (props) {
         }
     }
     async function handlePress() {
-        const _id = user.uid
-        const name = user.name
+        const _id = props.route.params.uid
+        const name = props.route.params.uid
         const user = { _id, name }
         await AsyncStorage.setItem('user', JSON.stringify(user))
         setUser(user)
@@ -106,14 +100,11 @@ function Chat (props) {
     const onLogout = () => {
       firebase.auth().signOut();
     }
-    
-    //console.log(user)
 
 
     if (!user) {
         return (
-            <View>
-            </View>
+            <View></View>
         )
     }
     return (

@@ -43,10 +43,11 @@ export default StyleSheet.create({
 		textAlign: "center",
 	},
 	status: {
+		paddingTop: 10,
 		paddingBottom: 20,
 		flexDirection: "row",
 		alignItems: "center",
-		fontSize:30
+		fontSize: 24
 	},
 	statusText: {
 		color: 'gray',
@@ -89,7 +90,7 @@ export default StyleSheet.create({
 		flex: 1,
 		resizeMode: "cover",
 		width: DIMENSION_WIDTH,
-		height: DIMENSION_HEIGHT
+		height: DIMENSION_HEIGHT,
 	},
 	top: {
 		paddingTop: 50,
@@ -140,22 +141,37 @@ export default StyleSheet.create({
 		justifyContent: "space-between",
 		flex: 1,
 		flexDirection: 'row',
-		paddingHorizontal: 10
+		paddingHorizontal: 10,
+		marginBottom: 250
 	},
 
 	// CONTAINER - MESSAGES
 	containerMessages: {
 		justifyContent: "space-between",
 		flex: 1,
-		paddingHorizontal: 0,
-		marginTop: -20
+		marginTop: -20,
+		marginBottom: 110
 	},
 	
 	// CONTAINER - PROFILE
-	containerProfile: { marginHorizontal: 0 },
+	containerProfile: {
+		marginHorizontal: 0,
+
+	},
+	containerProfileInfo: {
+		marginHorizontal: 0,
+		backgroundColor: '#ffd3b2' 
+	},
 	photo: {
 		width: DIMENSION_WIDTH,
 		height: 410
+	},
+	photoInfo: {
+		width: DIMENSION_WIDTH-150,
+		height: DIMENSION_WIDTH-150,
+		borderRadius: 150,
+		marginTop:50,
+		marginBottom: 75,
 	},
 	actionsProfile: {
 		justifyContent: "center",
@@ -165,7 +181,15 @@ export default StyleSheet.create({
 	iconButton: { 
 		fontFamily: FONT, 
 		fontSize: 20, 
+		marginTop: 5,
 		color: 'white' 
+	},
+	iconButtonX: { 
+		fontFamily: FONT, 
+		fontSize: 20, 
+		color: 'white',
+		marginTop: 5,
+		marginLeft:2 
 	},
 	iconButtonSettings:{
 		paddingTop:8,
@@ -181,19 +205,25 @@ export default StyleSheet.create({
 		width: 50,
 		height: 50,
 		borderRadius: 25,
-		backgroundColor: 'gray',
+		borderWidth: 2,
+		borderColor: '#de8303',
+		backgroundColor: '#ff8c00',
 		justifyContent: "center",
 		alignItems: "center",
-		marginRight: 12
+		marginLeft: 8,
+		marginRight: 10
 	},
 	circledButtonX: {
-		width: 50,
+		justifyContent: "center",
+		flexDirection: "row",
+		alignItems: "center",
+		marginLeft: 10,
 		height: 50,
 		borderRadius: 25,
+		borderWidth: 2,
+		borderColor: '#e83f3f',
 		backgroundColor: '#e83f3f',
-		justifyContent: "center",
-		alignItems: "center",
-		marginRight: 12
+		paddingHorizontal: 12,
 	},
 	roundedButton: {
 		justifyContent: "center",
@@ -202,7 +232,9 @@ export default StyleSheet.create({
 		marginLeft: 10,
 		height: 50,
 		borderRadius: 25,
-		backgroundColor: '#e83f3f',
+		borderWidth: 2,
+		borderColor: '#73809e',
+		backgroundColor: '#cfe2ff',
 		paddingHorizontal: 20
 	},
 	roundedButton2: {
@@ -212,11 +244,37 @@ export default StyleSheet.create({
 		marginLeft: 10,
 		height: 50,
 		borderRadius: 25,
-		backgroundColor: '#ff8c00',
+		borderWidth: 2,
+		borderColor: '#423d39',
+		backgroundColor: 'gray',
+		paddingHorizontal: 20
+	},
+	roundedButton3: {
+		justifyContent: "center",
+		flexDirection: "row",
+		alignItems: "center",
+		marginLeft: 10,
+		height: 50,
+		borderRadius: 25,
+		borderWidth: 2,
+		borderColor: '#423d39',
+		backgroundColor: 'tomato',
 		paddingHorizontal: 20
 	},
 	containerProfileItem: {
-		backgroundColor:'white',
+		backgroundColor: '#ffe5cf',
+		paddingBottom: 25,
+		paddingHorizontal: 45,
+		margin: 20,
+		borderRadius: 8,
+		marginTop: -55,
+		shadowOpacity: 0.05,
+		shadowRadius: 10,
+		shadowColor: 'black',
+		shadowOffset: { height: 0, width: 0 }
+	},
+	containerProfileItemInfo: {
+		backgroundColor: 'white',
 		paddingBottom: 25,
 		paddingHorizontal: 45,
 		margin: 20,
@@ -251,6 +309,13 @@ export default StyleSheet.create({
 		color: DARK_GREY,
 		paddingHorizontal: 10
 	},
+	iconProfile2: {
+		fontFamily: FONT,
+		fontSize: 12,
+		color: DARK_GREY,
+		paddingHorizontal: 10,
+		marginLeft: 3
+	},
 	infoContent: {
 		color: 'gray',
 		fontSize: 13,
@@ -276,13 +341,13 @@ export default StyleSheet.create({
 	// CONTAINER - Settings
     settingsContainer: {
     	flex: 1,
-    	flexDirection: 'column'
+    	flexDirection: 'column',
+		marginVertical: 10,
+		marginHorizontal: 10
     },
-
     iconButtonLogOut:{
-		marginRight: 12,
+		marginTop: 9
     },
-
     IconRight: {
     	width: 40,
     	height: 70,
@@ -296,8 +361,8 @@ export default StyleSheet.create({
     settingsGeneral:{
         fontFamily: FONT,
         fontSize: 25,
+		marginVertical: 10,
     },
-
     settingsButton: {
         justifyContent: "center",
 		flexDirection: "row",
@@ -307,7 +372,6 @@ export default StyleSheet.create({
 		borderRadius: 25,
 		backgroundColor: '#e83f3f',
 		paddingHorizontal: 20
-
     	},
 
 });

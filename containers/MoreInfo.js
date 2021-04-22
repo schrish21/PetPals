@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, Button, ScrollView, View, LogBox, Text, ImageBackground, TouchableOpacity, RefreshControl,} from 'react-native';
+import { Image, Button, ScrollView, View, LogBox, Text, ImageBackground} from 'react-native';
 import styles from '../assets/style.js';
 import { Icon } from 'react-native-elements';
 
@@ -10,10 +10,6 @@ import { connect } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationEvents } from 'react-navigation';
 
-const wait = (timeout) => {
-  return new Promise(resolve => setTimeout(resolve, timeout));
-}
-
 LogBox.ignoreAllLogs()
 
 function MoreInfo (props) {
@@ -21,7 +17,6 @@ function MoreInfo (props) {
   const [userPosts, setUserPosts] = useState([]);
   const [user, setUser] = useState(null);
   const [following, setFollowing] = useState(false);
-  const [refreshing, setRefreshing] = React.useState(false);
 
   useEffect(() => {
       const { currentUser, posts } = props;
@@ -58,33 +53,7 @@ function MoreInfo (props) {
                   setUserPosts(posts)
               })
       }
-
-      if (props.following.indexOf(props.route.params.uid) > -1) {
-          setFollowing(true);
-      } else {
-          setFollowing(false);
-      }
-
   }, [props.route.params.uid, props.following])
-
-  //console.log(user)
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    wait(2000).then(() => setRefreshing(false));
-    firebase.firestore()
-      .collection("users")
-      .doc(props.route.params.uid)
-      .get()
-      .then((snapshot) => {
-          if (snapshot.exists) {
-              setUser(snapshot.data());
-          }
-          else {
-              console.log('does not exist')
-          }
-      })
-  }, []);
 
   if (user === null) {
     return (
@@ -95,49 +64,22 @@ function MoreInfo (props) {
 
   const navigation = useNavigation();
 
-  const onUnfollow = () => {
-    firebase.firestore()
-        .collection("following")
-        .doc(firebase.auth().currentUser.uid)
-        .collection("userFollowing")
-        .doc(uid)
-        .delete()
-        .then(() => alert('Removed user!'))
-  }
-
-  function LeftClick() {
-    onUnfollow()
-    return 0
-  }
-
   return (
     <ImageBackground
       source={require('../assets/images/bg.png')}
       style={styles.bg}
     >
-
-      <ScrollView style={styles.containerProfile} refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
-        }>
-
-
-        <ImageBackground source={user.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: user.downloadURL} } style={styles.photo}>
-          <View style={styles.top}>
-
-          </View>
-        </ImageBackground>
-
+      <ScrollView style={styles.containerProfileInfo}>
+        <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+          <Image source={user.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: user.downloadURL} } style={styles.photoInfo}/>
+        </View>
 
         <View>
-          <View style={styles.containerProfileItem}>
+          <View style={styles.containerProfileItemInfo}>
               <View>
                 <Text style={styles.name}>{user.name}</Text>
                 <Text style={styles.descriptionProfileItem}>{user.gender}</Text>
               </View>
-
               <View style={styles.info}>
                 <Text style={styles.iconProfile}>
                   <Icon name='paw'
@@ -148,17 +90,24 @@ function MoreInfo (props) {
                 </Text>
                 <Text style={styles.infoContent}>{user.breed}</Text>
             </View>
-
-          <View style={styles.info}>
-            <Text style={styles.iconProfile}>
-              <Icon name="calendar"
-                    type='font-awesome'
-                    color='#474745'
-                    size={20} />
-            </Text>
-            <Text style={styles.infoContent}>{user.age} years old</Text>
-          </View>
-
+            <View style={styles.info}>
+              <Text style={styles.iconProfile}>
+                <Icon name="calendar"
+                      type='font-awesome'
+                      color='#474745'
+                      size={20} />
+              </Text>
+              <Text style={styles.infoContent}>{user.age} years old</Text>
+            </View>
+            <View style={styles.info}>
+              <Text style={styles.iconProfile2}>
+                <Icon name="user"
+                      type='font-awesome'
+                      color='#474745'
+                      size={21} />
+              </Text>
+              <Text style={styles.infoContent}>{user.oname}'s Pet</Text>
+            </View>
             <View style={styles.info}>
                 <Text style={styles.iconProfile}>
                   <Icon name='hashtag'
@@ -170,9 +119,6 @@ function MoreInfo (props) {
             </View>
           </View>
         </View>
-
-
-
       </ScrollView>
     </ImageBackground>
   );
@@ -181,7 +127,6 @@ function MoreInfo (props) {
 
 const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser,
-    posts: store.userState.posts,
     following: store.userState.following
 })
 export default connect(mapStateToProps, null)(MoreInfo);

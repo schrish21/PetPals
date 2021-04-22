@@ -16,7 +16,6 @@ export default function Save(props, {navigation}) {
         (async () => {
         const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
         setHasGalleryPermission(galleryStatus.status === 'granted');
-
         })();
     }, []);
 
@@ -27,8 +26,7 @@ export default function Save(props, {navigation}) {
         aspect: [1, 1],
         quality: 1,
         });
-
-        console.log(result);
+        //console.log(result);
 
         if (!result.cancelled) {
         setImage(result.uri);
@@ -38,17 +36,13 @@ export default function Save(props, {navigation}) {
     if (hasGalleryPermission === false) {
         return <Text>No access to gallery</Text>;
     }
-
-    //console.log(image)
     
     const childPath = `post/${firebase.auth().currentUser.uid}/${Math.random().toString(36)}`
 
     const uploadImage = async () => {
         const uri =  image;
-
         const response = await fetch(uri);
         const blob = await response.blob();
-        
         const task = firebase.storage().ref().child(childPath).put(blob);
 
         const taskProgress = snapshot => {
@@ -84,10 +78,14 @@ export default function Save(props, {navigation}) {
     }
 
     return (
-        <View style={{flex:1}}>
+        <View style={{flex:1, alignItems: 'center', justifyContent: 'center', marginTop: -50}}>
             <Image source={{ uri: image }} style={{ height:400, width:400}} />
-            <Button title="Pick Image From Gallery" onPress={() => pickImage()} />
-            <Button title="Save" onPress={() => uploadImage()}/>
+            <View style={{ width:"80%", height:50,}}>
+               <Button title="Pick Image From Gallery" onPress={() => pickImage()}/>
+            </View>
+            <View style={{marginTop:10, width:"80%", height:50,}}>
+              <Button title="Save" onPress={() => uploadImage()} color='tomato'/>
+            </View>
         </View>
 
     )

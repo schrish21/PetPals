@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {  SafeAreaView, StyleSheet, View, Button, TextInput, Text } from 'react-native'
+import {  SafeAreaView, StyleSheet, View, Button, TextInput, Text, TouchableOpacity } from 'react-native'
 
 import firebase from 'firebase'
 
@@ -72,7 +72,7 @@ export class Register extends Component {
     render() {
         return (
             <SafeAreaView style={styles.container}>
-                <Text style={{fontSize: 20, paddingBottom:5}}>Owner's Info</Text> 
+                <Text style={{fontSize: 20, marginTop:10, paddingBottom:5}}>Owner's Info</Text> 
                 <TextInput
                     style = {styles.input}
                     autoCapitalize = "words"
@@ -124,12 +124,9 @@ export class Register extends Component {
                     onChangeText={(bio) => this.setState({ bio })}
                 />
 
-                <View style={{marginTop:30, margin:5, width:'90%'}}>
-                    <Button
-                        onPress={() => this.onSignUp()}
-                        title="Sign Up"
-                        color='tomato'
-                /></View>
+                <TouchableOpacity style = {styles.signupBtn} onPress={() => this.onSignUp()}>
+                    <Text style={styles.textButton}>Sign Up</Text>
+                </TouchableOpacity>
                 
             </SafeAreaView>
         )
@@ -150,6 +147,22 @@ const styles = StyleSheet.create({
         fontSize: 18,
         width:'90%',
         backgroundColor: '#f7dab2'
+     },
+     textButton: {
+        fontSize: 22,
+        marginTop: 7,
+        color: 'white'
+    },
+     signupBtn:
+     {
+        backgroundColor: "#ffa74f",
+        width:'90%',
+        height:40,
+        borderRadius: 5,
+        marginTop:50, 
+        margin:5, 
+        marginBottom: 20,
+        alignItems: "center",
      },
 })
 

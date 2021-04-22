@@ -49,22 +49,13 @@ export class Login extends Component {
                 />
                  </View>
 
-                <View style = {styles.loginBtn}>
-                    <TouchableOpacity></TouchableOpacity>
-                    <Button
-                        onPress={() => this.onSignIn()}
-                        title="Sign In"
-                        color='tomato'
-                    />
-                </View>
-                <View style={{marginTop:120, width:"80%", height:50,}}>
-                    <TouchableOpacity></TouchableOpacity>
-                    <Button
-                        color='#ffa74f'
-                        title='Register' 
-                        onPress={() => this.props.navigation.navigate("Register")}
-                /> 
-                 </View>    
+                <TouchableOpacity style = {styles.loginBtn} onPress={() => this.onSignIn()}>
+                    <Text style={styles.textButton}>Login</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style = {styles.registerBtn} onPress={() => this.props.navigation.navigate("Register")}>
+                    <Text style={styles.textButton}>Register</Text>
+                </TouchableOpacity>
 
              </View>
         )
@@ -84,18 +75,40 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 22,
-        marginTop: 5
+        marginTop: 7,
+    },
+    textButton: {
+        fontSize: 22,
+        marginTop: 7,
+        color: 'white'
     },
     inputView: {
         backgroundColor: "#ffe4b5",
         width:"80%",
-        height:50,
-        marginBottom: 20,
+        height:40,
+        borderRadius: 5,
+        marginBottom: 10,
         alignItems: "center",
     },
     loginBtn:
      {
+        backgroundColor: "tomato",
         width:"80%",
+        height:40,
+        borderRadius: 5,
+        marginTop:10,
+        marginBottom: 20,
+        alignItems: "center",
+     },
+    registerBtn:
+     {
+        backgroundColor: "#ffa74f",
+        width:"80%",
+        height:40,
+        borderRadius: 5,
+        marginTop:120,
+        marginBottom: 20,
+        alignItems: "center",
      },
 });
 

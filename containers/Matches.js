@@ -25,7 +25,6 @@ function Matches (props) {
   }
 
   var followingFilter = arrayRemove(props.following, props.route.params.uid);
-  //console.log(followingFilter)
 
   useEffect(() => {
       const { currentUser, posts } = props;
@@ -46,12 +45,6 @@ function Matches (props) {
                       console.log('does not exist')
                   }
               })
-      }
-
-      if (props.following.indexOf(props.route.params.uid) > -1) {
-          setFollowing(true);
-      } else {
-          setFollowing(false);
       }
 
       firebase.firestore()
@@ -84,7 +77,7 @@ function Matches (props) {
         data={usersMatched}
         horizontal={false}
         renderItem={({ item }) => (
-            
+
           item.uid != props.route.params.uid ?
           <TouchableOpacity onPress={() => navigation.navigate("Profile", {uid: item.uid, name:item.name})}>
             <CardMatches
@@ -107,7 +100,6 @@ function Matches (props) {
 
 const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
-  posts: store.userState.posts,
   following: store.userState.following
 })
 export default connect(mapStateToProps, null)(Matches);

@@ -6,11 +6,13 @@ import HomeScreen from "./containers/Home";
 import MatchesScreen from "./containers/Matches";
 import MessagesScreen from "./containers/Messages";
 import ProfileScreen from "./containers/Profile";
-import ContactUsScreen from "./containers/ContactUs";
+
 import SettingsScreen from "./containers/Settings";
 import MoreInfoScreen from "./containers/MoreInfo";
+
 import SaveScreen from './components/Save';
 import ChatScreen from "./components/Chat";
+import ContactUsScreen from "./components/ContactUs";
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';

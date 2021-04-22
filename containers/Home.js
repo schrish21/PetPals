@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import {Image, Button, ScrollView, View, Text, ImageBackground, TouchableOpacity, FlatList, LogBox } from 'react-native';
+import {View, Text, ImageBackground, LogBox } from 'react-native';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
 import CardItem from '../components/CardItem';
 import styles from '../assets/style.js';
 import * as fromAuth from '../components/CardItem';
-
-import { Icon } from 'react-native-elements';
 
 import firebase from 'firebase';
 require('firebase/firestore');
@@ -17,7 +15,7 @@ function Home (props) {
 
   const [following, setFollowing] = useState([])
   const [usersMatched, setUsersMatched] = useState([])
-  
+  const [usersChat, setUsersChat] = useState([])
 
   useEffect(() => {
 
@@ -42,24 +40,14 @@ function Home (props) {
                   return { id, ...data }
               });
               setUsersMatched(usersMatched);
-    })
-
-
-  })
+            })
+        })
     
   }, [])
 
-  //fetchUsers();
-  //console.log(users)
-  //console.log(usersMatched)
-  //console.log(firebase.auth().currentUser)
-
 
   return (
-    <ImageBackground
-      source={require('../assets/images/bg.png')}
-      style={styles.bg}
-    >
+    <ImageBackground source={require('../assets/images/bg.png')} style={styles.bg}>
       <View style={styles.containerHome}>
         <View style={styles.top}>
         </View>
@@ -94,5 +82,6 @@ function Home (props) {
 
 const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
+  chat: store.userState.chat
 })
 export default connect(mapStateToProps, null)(Home);

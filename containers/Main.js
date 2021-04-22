@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons'; 
 

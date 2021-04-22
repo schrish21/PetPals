@@ -1,5 +1,5 @@
 import React, { useState, useEffect }  from 'react';
-import { Modal, Alert, View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
+import {View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
 
 import styles from '../assets/style.js';
@@ -12,25 +12,12 @@ import { connect } from 'react-redux'
 import { useNavigation } from '@react-navigation/native';
 import { NavigationEvents } from 'react-navigation';
 
-function CardItem ({
-  name,
-  image,
-  bio,
-  uid,
-  screen,
-  onPressLeft,
-  onPressRight,
-}, props) {
-
-  //console.log('current uid from card item = '+ firebase.auth().currentUser.uid)
-  //console.log(uid)
-  //styles
+function CardItem ({name, image, bio, uid, screen, onPressLeft, onPressRight}, props) {
 
   const screenWidth = Dimensions.get('window').width;
   const navigation = useNavigation();
 
-  const style_Image = [
-    {
+  const style_Image = [{
       width: screen ? screenWidth / 2 - 25 : screenWidth - 85,
       height: screen ? 170 : 350,
       borderRadius: 18,
@@ -38,36 +25,13 @@ function CardItem ({
     }
   ];
 
-  const style_Name = [
-    {
+  const style_Name = [{
       color: '#363636',
       fontSize: screen ? 15 : 30,
       paddingTop: screen ? 11 : 13,
       paddingBottom: screen ? 5 : 8,
     }
   ];
-  
-  global.num = 1;
-
-  if (num == 3)
-  {
-    global.num = 3;
-  }
-  else if (num == 1) 
-  {
-    global.num = 1;
-  }
-
-  function alertmessage(state) {
-    if (state == 1)
-    {
-      alert('Matched User!')
-    }
-    else if (state == 2)
-    {
-      alert('Removed User!')
-    }
-  }
   
   const onFollow = () => {
     firebase.firestore()
@@ -76,7 +40,7 @@ function CardItem ({
         .collection("userFollowing")
         .doc(uid)
         .set({})
-        .then(() => alertmessage(num))
+        .then(() => alert('Matched user!'))
   }
 
   const onUnfollow = () => {
@@ -86,7 +50,7 @@ function CardItem ({
         .collection("userFollowing")
         .doc(uid)
         .delete()
-        .then(() => alertmessage(num+1))
+        .then(() => alert('Removed user!'))
   }
 
   function LeftClick() {
@@ -144,7 +108,7 @@ function CardItem ({
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.miniButton}>
+          <TouchableOpacity style={styles.miniButton}  onPress={() => navigation.navigate("Profile", {uid:uid, name:name})}>
             <Text style={styles.flash}>
               <Icon reverseColor
                   name='comments-o'
@@ -162,7 +126,6 @@ function CardItem ({
 
 const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
-  posts: store.userState.posts,
-  following: store.userState.following
+  chat: store.userState.chat
 })
 export default connect(mapStateToProps, null)(CardItem);
