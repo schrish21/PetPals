@@ -16,7 +16,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 
-import LandingScreen from './components/auth/Landing';
+import LoadingScreen from './components/auth/Loading';
 import RegisterScreen from './components/auth/Register';
 import LoginScreen from './components/auth/Login';
 
@@ -80,10 +80,10 @@ export class App extends Component {
         if(!loggedIn){
         return (
             <NavigationContainer>
-            <Stack.Navigator initialRouteName="Landing">
-                <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false}}/>
+            <Stack.Navigator initialRouteName="Loading">
+              <Stack.Screen name="Loading" component={LoadingScreen} navigation ={this.props.navigation} options={{headerShown : false}}/>
+                <Stack.Screen name="Login" component={LoginScreen}  options={{ headerShown: false}}/>
                 <Stack.Screen name="Register" component={RegisterScreen}/>
-                <Stack.Screen name="Login" component={LoginScreen}/>
             </Stack.Navigator>
             </NavigationContainer>
         );

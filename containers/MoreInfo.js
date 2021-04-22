@@ -89,9 +89,6 @@ function MoreInfo (props) {
   if (user === null) {
     return (
       <View>
-        <Text></Text>
-        <Button title="Logout" onPress={() => onLogout()}/>
-        <Text>Empty</Text>
       </View>
     )
   }

@@ -21,7 +21,7 @@ export class Login extends Component {
             .then((result) => 
                 {console.log(result)})
             .catch((error) => 
-                {console.log(error)})
+                {alert(error)})
     }
 
 
@@ -50,16 +50,28 @@ export class Login extends Component {
                  </View>
 
                 <View style = {styles.loginBtn}>
+                    <TouchableOpacity></TouchableOpacity>
                     <Button
                         onPress={() => this.onSignIn()}
                         title="Sign In"
                         color='tomato'
                     />
-                 </View>
+                </View>
+                <View style={{marginTop:120, width:"80%", height:50,}}>
+                    <TouchableOpacity></TouchableOpacity>
+                    <Button
+                        color='#ffa74f'
+                        title='Register' 
+                        onPress={() => this.props.navigation.navigate("Register")}
+                /> 
+                 </View>    
+
              </View>
         )
     }
 }
+
+const {SCREEN_WIDTH, SCREEN_HEIGHT} = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -84,8 +96,8 @@ const styles = StyleSheet.create({
     loginBtn:
      {
         width:"80%",
-        marginTop:40,
      },
 });
-const {SCREEN_WIDTH, SCREEN_HEIGHT} = Dimensions.get("window");
+
+
 export default Login

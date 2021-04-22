@@ -128,7 +128,7 @@ export class Register extends Component {
                     <Button
                         onPress={() => this.onSignUp()}
                         title="Sign Up"
-                        color='#ffa74f'
+                        color='tomato'
                 /></View>
                 
             </SafeAreaView>
