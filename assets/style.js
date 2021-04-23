@@ -142,7 +142,7 @@ export default StyleSheet.create({
 		flex: 1,
 		flexDirection: 'row',
 		paddingHorizontal: 10,
-		marginBottom: 250
+		marginBottom: 10
 	},
 
 	// CONTAINER - MESSAGES

@@ -92,6 +92,10 @@ function Profile (props) {
       })
   }, []);
 
+  const onLogout = () => {
+    firebase.auth().signOut();
+  }
+
   if (user === null) {
     return (
       <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
