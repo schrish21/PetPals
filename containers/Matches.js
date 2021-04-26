@@ -65,10 +65,10 @@ function Matches (props) {
 
   return (
     <View style={styles.containerMatches}>
-    <ImageBackground source={require('../assets/images/bg.png')} style={styles.bg}>
+    <ImageBackground source={require('../assets/images/bg.png')} style={styles.bgMatches}>
       <ScrollView>
           <View style={styles.top}>
-          <Text style={styles.status}>Matches</Text>
+          <Text style={{paddingTop: 10, paddingBottom: 10, flexDirection: "row", alignItems: "center", fontSize: 22}}>Matches</Text>
           </View>
       </ScrollView>
 

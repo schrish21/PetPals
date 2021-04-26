@@ -13,11 +13,25 @@ LogBox.ignoreAllLogs()
 
 function Home (props) {
 
+  const [user, setUser] = useState(null);
   const [following, setFollowing] = useState([])
   const [usersMatched, setUsersMatched] = useState([])
   const [usersChat, setUsersChat] = useState([])
 
   useEffect(() => {
+
+    firebase.firestore()
+        .collection("users")
+        .doc(firebase.auth().currentUser.uid)
+        .get()
+        .then((snapshot) => {
+            if (snapshot.exists) {
+                setUser(snapshot.data());
+            }
+            else {
+                console.log('does not exist')
+            }
+        })
 
     firebase.firestore()
       .collection("following")
@@ -71,6 +85,7 @@ function Home (props) {
               onPressRight={() => this.swiper.swipeLeft()}
               onSwipedLeft={() => LeftClick()}
               onSwipedRight={() => RightClick()}
+              currentuser = {user}
               />
             </Card>
           ))}

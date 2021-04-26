@@ -72,7 +72,7 @@ function Profile (props) {
           });
           setUsersChat(usersChat);
       }) 
-  }, [props.route.params.uid, props.following])
+  }, [user])
 
 
   const onRefresh = React.useCallback(() => {
