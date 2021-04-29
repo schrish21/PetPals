@@ -40,8 +40,22 @@ function CardItem ({name, image, bio, uid, screen, onPressLeft, onPressRight}, p
         .collection("userFollowing")
         .doc(uid)
         .set({})
-        .then(() => alert('Matched user!'))
-  }
+        .then(() => firebase.firestore()
+                    .collection("following")
+                    .doc(uid)
+                    .collection("userFollowing")
+                    .doc(firebase.auth().currentUser.uid)
+                    .get()
+                    .then((docSnapshot) => {
+                      if (docSnapshot.exists) {
+                        alert('The other person liked you as well!')
+                    }
+                      else {
+
+                      }
+                  })
+        );
+        }     
 
   const onUnfollow = () => {
     firebase.firestore()
