@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect, useLayoutEffect }  from 'react';
 import styles from '../assets/style.js';
 import {ScrollView, SafeAreaView, Text, TouchableOpacity, ImageBackground, View, FlatList, StyleSheet, Dimensions, RefreshControl} from 'react-native';
 

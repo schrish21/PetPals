@@ -17,14 +17,17 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.cnq.petpals",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.cnq.petpals",
+      "versionCode": 2,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon-petpals.png",
+        "foregroundImage": "./assets/adaptive-icon-petpals.png", 
         "backgroundColor": "#FFFFFF"
-      },
-      "package": "com.cnq.petpals"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"

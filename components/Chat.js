@@ -26,7 +26,7 @@ if (firebase.apps.length === 0) {
 LogBox.ignoreLogs(['Setting a timer for a long period of time'])
 
 
-function Chat (props) {
+function Chat (props, uid, uname, userConversation) {
 
     const [user, setUser] = useState(null)
     const [name, setName] = useState('')
@@ -46,15 +46,28 @@ function Chat (props) {
                         .doc(props.route.params.uid)
                         .collection('conversation')
 
+    const chatsRefA = firebase.firestore()
+                        .collection('chats')
+                        .doc(props.route.params.uid)
+                        .collection('userChat')
+                        .doc(props.route.params.userConversation)
+
+    const chatsRefB = firebase.firestore()
+                        .collection('chats')
+                        .doc(props.route.params.userConversation)
+                        .collection('userChat')
+                        .doc(props.route.params.uid)
+
     useEffect(() => {
 
         if(!user){
             const _id = props.route.params.uid
             const name = props.route.params.uname
+            setName(name)
             const user = { _id, name }
             setUser(user)
         }
-
+        setName(name)
         const unsubscribe = chatsRef.onSnapshot((querySnapshot) => {
             const messagesFirestore = querySnapshot
                 .docChanges()
@@ -85,7 +98,7 @@ function Chat (props) {
     }
     async function handlePress() {
         const _id = props.route.params.uid
-        const name = props.route.params.uid
+        const name = props.route.params.uname
         const user = { _id, name }
         await AsyncStorage.setItem('user', JSON.stringify(user))
         setUser(user)
@@ -94,7 +107,8 @@ function Chat (props) {
         handlePress()
         const writes = messages.map((m) => chatsRef.add(m))
         const writes2 = messages.map((m2) => chatsRef2.add(m2))
-        await Promise.all(writes, writes2, console.log('text sent ='+writes))
+        const writesB = messages.map((m2) => chatsRefB.set(m2))
+        await Promise.all(writes, writes2, writesB, console.log('text sent ='+writes))
     }
 
     const onLogout = () => {
@@ -108,7 +122,7 @@ function Chat (props) {
         )
     }
     return (
-        <GiftedChat messages={messages} user={user} onSend={handleSend} renderAvatarOnTop/>
+        <GiftedChat messages={messages} user={user} onSend={handleSend} renderAvatarOnTop={true} alignTop={true}/>
     )
     
 };

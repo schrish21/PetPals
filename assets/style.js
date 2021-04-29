@@ -143,7 +143,7 @@ export default StyleSheet.create({
 		resizeMode: "cover",
 		width: DIMENSION_WIDTH,
 		height: DIMENSION_HEIGHT,
-		paddingBottom: 90,
+		paddingBottom: 15,
 		marginBottom: 10
 	},
 	containerMatches: {
@@ -151,7 +151,7 @@ export default StyleSheet.create({
 		flex: 1,
 		flexDirection: 'row',
 		paddingHorizontal: 10,
-		marginBottom: 10
+		marginBottom: 0
 	},
 	// CONTAINER - MESSAGES
 	containerMessages: {
