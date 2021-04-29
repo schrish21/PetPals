@@ -137,6 +137,15 @@ export default StyleSheet.create({
 	containerHome: { marginHorizontal: 10 },
 
 	// CONTAINER - MATCHES
+	bgMatches: {
+		flex: 1,
+		backgroundColor:'white',
+		resizeMode: "cover",
+		width: DIMENSION_WIDTH,
+		height: DIMENSION_HEIGHT,
+		paddingBottom: 90,
+		marginBottom: 10
+	},
 	containerMatches: {
 		justifyContent: "space-between",
 		flex: 1,
@@ -144,7 +153,6 @@ export default StyleSheet.create({
 		paddingHorizontal: 10,
 		marginBottom: 10
 	},
-
 	// CONTAINER - MESSAGES
 	containerMessages: {
 		justifyContent: "space-between",
@@ -267,7 +275,7 @@ export default StyleSheet.create({
 		paddingHorizontal: 45,
 		margin: 20,
 		borderRadius: 8,
-		marginTop: -55,
+		marginTop: -75,
 		shadowOpacity: 0.05,
 		shadowRadius: 10,
 		shadowColor: 'black',

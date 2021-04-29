@@ -26,7 +26,7 @@ npm install --save --legacy-peer-deps
 3. Once the installation is complete with no errors, run expo by typing on command prompt
 
 ```
-expo start
+expo start -c
 ```
 
 A web browser will open. Under 'connection' choose Tunnel, wait for it to say "tunnel ready", Then scan the barcode using your phone and it should open up the ExpoGo application on your phone.

@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 import { Text, View, Image, StyleSheet, Dimensions } from 'react-native';
-import { tinderclone } from "../assets/fonts/opensans.ttf";
 
-const Message = ({ image, lastMessage, name, screen }) => {
+import firebase from 'firebase';
+require('firebase/firestore');
+import { connect } from 'react-redux';
+
+const Message = ({ image, lastMessage, name, uid, screen }) => {
     
   return (
     <View style={styles.containerMessage}>
@@ -32,7 +35,7 @@ const styles = StyleSheet.create({
     width: DIMENSION_WIDTH - 100,
   },
   avatar: {
-    borderRadius: 30,
+    borderRadius: 30, 
     width: 60,
     height: 60,
     marginRight: 20,
@@ -40,7 +43,7 @@ const styles = StyleSheet.create({
   },
   message: {
     color: GRAY,
-    fontSize: 12,
+    fontSize: 14,
     paddingTop: 5
   },
 })

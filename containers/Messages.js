@@ -56,13 +56,9 @@ function Messages (props) {
                   return { id, ...data }
               });
               setUsersChat(usersChat);
-
         }) 
   
     }, [props.route.params.uid, props.chat])
-  
-    //console.log(props.chat)
-    //console.log(usersChat)
 
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
@@ -107,14 +103,18 @@ function Messages (props) {
                         <Message
                         image={item.downloadURL===undefined || null ? require('../assets/images/blank-profile.webp'): {uri: item.downloadURL}}
                         name={item.name}
+                        uid={item.uid}
                         lastMessage
+                        currentuser = {props.route.params.uid}
                         screen
                         />
                     </TouchableOpacity>
                     : 
                     <View></View>
                 )} 
-                keyExtractor={(item) => item.title}
+                keyExtractor={(item, index) => {
+                    return item.id;
+                  }}
             />
             </View>
         </ImageBackground>

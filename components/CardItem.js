@@ -12,8 +12,27 @@ import { connect } from 'react-redux'
 import { useNavigation } from '@react-navigation/native';
 import { NavigationEvents } from 'react-navigation';
 
-function CardItem ({name, image, bio, uid, screen, onPressLeft, onPressRight}, props) {
+function CardItem ({name, image, bio, uid, screen, onPressLeft, onPressRight, currentuser}, props) {
 
+  const [chats, setChats] = useState([])
+
+  useEffect(() => {
+
+    firebase.firestore()
+      .collection("chats")
+      .doc(currentuser.uid)
+      .collection("userChat")
+      .onSnapshot((snapshot) => {
+          let chats = snapshot.docs.map(doc => {
+              const id = doc.id; 
+              return id
+          })
+          setChats(chats);
+      })
+
+  })
+
+  
   const screenWidth = Dimensions.get('window').width;
   const navigation = useNavigation();
 
@@ -36,7 +55,7 @@ function CardItem ({name, image, bio, uid, screen, onPressLeft, onPressRight}, p
   const onFollow = () => {
     firebase.firestore()
         .collection("following")
-        .doc(firebase.auth().currentUser.uid)
+        .doc(currentuser.uid)
         .collection("userFollowing")
         .doc(uid)
         .set({})
@@ -60,7 +79,7 @@ function CardItem ({name, image, bio, uid, screen, onPressLeft, onPressRight}, p
   const onUnfollow = () => {
     firebase.firestore()
         .collection("following")
-        .doc(firebase.auth().currentUser.uid)
+        .doc(currentuser.uid)
         .collection("userFollowing")
         .doc(uid)
         .delete()
@@ -79,12 +98,34 @@ function CardItem ({name, image, bio, uid, screen, onPressLeft, onPressRight}, p
     return 0
   }
 
+  const startChat = () => {
+    if(chats.includes(firebase.auth().currentUser.uid)){
+      navigation.navigate("Chat", {uid: firebase.auth().currentUser.uid, uname:currentuser.name, userConversation: uid})
+    }
+    else{
+      firebase.firestore()
+        .collection('chats')
+        .doc(firebase.auth().currentUser.uid)
+        .collection('userChat')
+        .doc(uid)
+        .set({})
+      firebase.firestore()
+        .collection('chats')
+        .doc(uid)
+        .collection('userChat')
+        .doc(firebase.auth().currentUser.uid)
+        .set({})
+        .then(() => navigation.navigate("Chat", {uid: firebase.auth().currentUser.uidd, uname:uscurrentuserer.name, userConversation: uid}))
+        return 0
+    }
+  }
+
   return (
     
     <View style={styles.containerCardItem}> 
 
       {/*NAME and BIO*/}
-      <Image source={image} style={style_Image}/>
+      <Image source={image} style={style_Image} onPress={() => navigation.navigate("MoreInfo",{uid})}/>
       <View style={{backgroundColor:'#f2e3dc', width: screen ? screenWidth / 2 - 25 : screenWidth - 85, borderRadius: 10, alignContent:'center', alignItems:'center'}}>
         <Text style={style_Name}>{name}</Text>
         <Text style={styles.bioCardItem}>{bio}</Text>
@@ -122,7 +163,7 @@ function CardItem ({name, image, bio, uid, screen, onPressLeft, onPressRight}, p
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.miniButton}  onPress={() => navigation.navigate("Profile", {uid:uid, name:name})}>
+          <TouchableOpacity style={styles.miniButton}  onPress={() => alert("You must be matched first in order to start converstation")}>
             <Text style={styles.flash}>
               <Icon reverseColor
                   name='comments-o'
@@ -143,3 +184,4 @@ const mapStateToProps = (store) => ({
   chat: store.userState.chat
 })
 export default connect(mapStateToProps, null)(CardItem);
+
