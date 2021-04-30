@@ -46,18 +46,6 @@ function Chat (props, uid, uname, userConversation) {
                         .doc(props.route.params.uid)
                         .collection('conversation')
 
-    const chatsRefA = firebase.firestore()
-                        .collection('chats')
-                        .doc(props.route.params.uid)
-                        .collection('userChat')
-                        .doc(props.route.params.userConversation)
-
-    const chatsRefB = firebase.firestore()
-                        .collection('chats')
-                        .doc(props.route.params.userConversation)
-                        .collection('userChat')
-                        .doc(props.route.params.uid)
-
     useEffect(() => {
 
         if(!user){
@@ -107,8 +95,7 @@ function Chat (props, uid, uname, userConversation) {
         handlePress()
         const writes = messages.map((m) => chatsRef.add(m))
         const writes2 = messages.map((m2) => chatsRef2.add(m2))
-        const writesB = messages.map((m2) => chatsRefB.set(m2))
-        await Promise.all(writes, writes2, writesB, console.log('text sent ='+writes))
+        await Promise.all(writes, writes2, console.log('text sent ='+writes))
     }
 
     const onLogout = () => {

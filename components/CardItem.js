@@ -13,25 +13,6 @@ import { useNavigation } from '@react-navigation/native';
 import { NavigationEvents } from 'react-navigation';
 
 function CardItem ({name, image, bio, uid, screen, onPressLeft, onPressRight, currentuser}, props) {
-
-  const [chats, setChats] = useState([])
-
-  useEffect(() => {
-
-    firebase.firestore()
-      .collection("chats")
-      .doc(currentuser.uid)
-      .collection("userChat")
-      .onSnapshot((snapshot) => {
-          let chats = snapshot.docs.map(doc => {
-              const id = doc.id; 
-              return id
-          })
-          setChats(chats);
-      })
-
-  })
-
   
   const screenWidth = Dimensions.get('window').width;
   const navigation = useNavigation();
@@ -82,28 +63,6 @@ function CardItem ({name, image, bio, uid, screen, onPressLeft, onPressRight, cu
     onFollow()
     onPressLeft()
     return 0
-  }
-
-  const startChat = () => {
-    if(chats.includes(firebase.auth().currentUser.uid)){
-      navigation.navigate("Chat", {uid: firebase.auth().currentUser.uid, uname:currentuser.name, userConversation: uid})
-    }
-    else{
-      firebase.firestore()
-        .collection('chats')
-        .doc(firebase.auth().currentUser.uid)
-        .collection('userChat')
-        .doc(uid)
-        .set({})
-      firebase.firestore()
-        .collection('chats')
-        .doc(uid)
-        .collection('userChat')
-        .doc(firebase.auth().currentUser.uid)
-        .set({})
-        .then(() => navigation.navigate("Chat", {uid: firebase.auth().currentUser.uidd, uname:uscurrentuserer.name, userConversation: uid}))
-        return 0
-    }
   }
 
   return (
@@ -167,7 +126,6 @@ function CardItem ({name, image, bio, uid, screen, onPressLeft, onPressRight, cu
 
 const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
-  chat: store.userState.chat
 })
 export default connect(mapStateToProps, null)(CardItem);
 

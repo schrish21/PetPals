@@ -62,16 +62,17 @@ function Profile (props) {
             })
       }
       firebase.firestore()
-      .collection('users')
-      .where('uid', 'in', props.chat)
-      .onSnapshot((snapshot) => {
-          let usersChat = snapshot.docs.map(doc => {
-              const data = doc.data();
-              const id = doc.id;
-              return { id, ...data }
-          });
-          setUsersChat(usersChat);
+        .collection('users')
+        .where('uid', 'in', props.chat)
+        .onSnapshot((snapshot) => {
+            let usersChat = snapshot.docs.map(doc => {
+                const data = doc.data();
+                const id = doc.id;
+                return { id, ...data }
+            });
+            setUsersChat(usersChat);
       }) 
+      
   }, [props.route.params.uid])
 
 
@@ -116,27 +117,26 @@ function Profile (props) {
         .then(() => alert('Removed user!'))
   }
 
-  const createChatRoom = () => {
-    firebase.firestore()
+
+  const startChat = () => {
+    if(props.chat.includes(props.route.params.uid)){
+      navigation.navigate("Chat", {uid: firebase.auth().currentUser.uid, uname:props.currentUser.name, userConversation: user.uid})
+    }
+    else{
+      firebase.firestore()
       .collection('chats')
       .doc(firebase.auth().currentUser.uid)
       .collection('userChat')
       .doc(props.route.params.uid)
-      .set({
-        id:'id',
-        name:'name'})
-      console.log('chat ready')
-  }
-
-  const startChat = () => {
-    if(props.chat.includes(props.route.params.uid)){
-      navigation.navigate("Chat", {uid: firebase.auth().currentUser.uid, uname:user.name, userConversation: user.uid})
-    }
-    else{
-      async () => {
-        const result = await createChatRoom()
-      }
-      navigation.navigate("Chat", {uid: firebase.auth().currentUser.uid, uname:user.name, userConversation: user.uid})
+      .set({})
+    firebase.firestore()
+      .collection('chats')
+      .doc(props.route.params.uid)
+      .collection('userChat')
+      .doc(firebase.auth().currentUser.uid)
+      .set({})
+      .then(() =>  navigation.navigate("Chat", {uid: firebase.auth().currentUser.uid,  uname:props.currentUser.name, userConversation: user.uid}))
+      return 0
     }
   }
 
