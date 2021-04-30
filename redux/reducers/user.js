@@ -1,10 +1,11 @@
-import { USER_STATE_CHANGE, USER_POSTS_STATE_CHANGE, USER_FOLLOWING_STATE_CHANGE, USER_CHAT_STATE_CHANGE, CLEAR_DATA } from "../constants";
+import { USER_STATE_CHANGE, USER_POSTS_STATE_CHANGE, USER_FOLLOWING_STATE_CHANGE, USER_CHAT_STATE_CHANGE, CLEAR_DATA, USER_MATCH_STATE_CHANGE} from "../constants";
 
 const initialState = {
     currentUser: null,
     posts: [],
     following: [],
     chat: [],
+    match: [],
 }
 
 export const user = (state = initialState, action) => {
@@ -23,6 +24,11 @@ export const user = (state = initialState, action) => {
             return {
                 ...state,
                 following: action.following
+            }
+        case USER_MATCH_STATE_CHANGE:
+            return {
+                ...state,
+                match: action.match
             }
         case USER_CHAT_STATE_CHANGE:
             return {

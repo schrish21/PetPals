@@ -59,6 +59,7 @@ function Home (props) {
     
   }, [])
 
+  
 
   return (
     <ImageBackground source={require('../assets/images/bg.png')} style={styles.bg}>

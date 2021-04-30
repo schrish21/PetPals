@@ -63,11 +63,25 @@ function CardItem ({name, image, bio, uid, screen, onPressLeft, onPressRight, cu
                     .collection("following")
                     .doc(uid)
                     .collection("userFollowing")
-                    .doc(firebase.auth().currentUser.uid)
+                    .doc(currentuser.uid)
                     .get()
                     .then((docSnapshot) => {
                       if (docSnapshot.exists) {
                         alert('The other person liked you as well!')
+                        
+                        firebase.firestore()
+                        .collection("match")
+                        .doc(currentuser.uid)
+                        .collection("matched")
+                        .doc(uid)
+                        .set({})
+                        
+                        firebase.firestore()
+                        .collection("match")
+                        .doc(uid)
+                        .collection("matched")
+                        .doc(currentuser.uid)
+                        .set({})
                     }
                       else {
 

@@ -47,19 +47,41 @@ function Matches (props) {
               })
       }
 
-      firebase.firestore()
-        .collection('users')
-        .where('uid', 'in', followingFilter)
-        .onSnapshot((snapshot) => {
-            let usersMatched = snapshot.docs.map(doc => {
-                const data = doc.data();
-                const id = doc.id;
-                return { id, ...data }
-            });
-            setUsersMatched(usersMatched);
-      })
+      console.log(props.match)
 
-  }, [props.route.params.uid, props.following])
+      firebase.firestore()
+        .collection('match')
+        .doc(props.route.params.uid)
+        .collection("matched")
+        .get()
+        .then((snapshot) => {
+            if (snapshot.empty){
+            var data = {};
+                firebase.firestore()
+                .collection("match")
+                .doc(props.route.params.uid)
+                .collection("matched")
+                .doc("ZZZZZ")
+                .set({data})
+            }
+            else{
+            firebase.firestore()
+                    .collection('users')
+                    .where('uid', 'in', props.match)
+                    .onSnapshot((snapshot) => {
+                        let usersMatched = snapshot.docs.map(doc => {
+                            const data = doc.data();
+                            const id = doc.id;
+                            return { id, ...data }
+                        });
+                        setUsersMatched(usersMatched);
+                })
+            }
+        })
+      
+  }, [props.route.params.uid, props.following, props.match])
+  
+  console.log(usersMatched)
 
   const navigation = useNavigation();  
 
@@ -100,6 +122,7 @@ function Matches (props) {
 
 const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
-  following: store.userState.following
+  following: store.userState.following,
+  match: store.userState.match
 })
 export default connect(mapStateToProps, null)(Matches);

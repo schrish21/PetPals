@@ -15,7 +15,7 @@ import firebase from 'firebase';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'; 
-import { fetchUser, fetchUserPosts, fetchUserFollowing, fetchUserChat, clearData } from '../redux/actions/index';
+import { fetchUser, fetchUserPosts, fetchUserFollowing, fetchUserChat, clearData, fetchUserMatch } from '../redux/actions/index';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -31,6 +31,7 @@ export class Main extends Component {
         this.props.fetchUserPosts();
         this.props.fetchUserFollowing();
         this.props.fetchUserChat();
+        this.props.fetchUserMatch();
     }
 
     render() {
@@ -86,6 +87,6 @@ export class Main extends Component {
 const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser
 })
-const mapDispatchProps = (dispatch) => bindActionCreators({  fetchUser, fetchUserPosts, fetchUserFollowing, fetchUserChat, clearData  }, dispatch);
+const mapDispatchProps = (dispatch) => bindActionCreators({  fetchUserMatch, fetchUser, fetchUserPosts, fetchUserFollowing, fetchUserChat, clearData  }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchProps)(Main);

@@ -1,4 +1,4 @@
-import {USER_STATE_CHANGE, USER_POSTS_STATE_CHANGE, USER_FOLLOWING_STATE_CHANGE, USER_CHAT_STATE_CHANGE, CLEAR_DATA} from '../constants/index'
+import {USER_STATE_CHANGE, USER_POSTS_STATE_CHANGE, USER_FOLLOWING_STATE_CHANGE, USER_CHAT_STATE_CHANGE, CLEAR_DATA, USER_MATCH_STATE_CHANGE} from '../constants/index'
 import firebase from 'firebase'
 require('firebase/firestore')
 
@@ -56,6 +56,22 @@ export function fetchUserFollowing() {
                     return id
                 })
                 dispatch({ type: USER_FOLLOWING_STATE_CHANGE, following });
+            })
+    })
+}
+
+export function fetchUserMatch() {
+    return ((dispatch) => {
+        firebase.firestore()
+            .collection("match")
+            .doc(firebase.auth().currentUser.uid)
+            .collection("matched")
+            .onSnapshot((snapshot) => {
+                let match = snapshot.docs.map(doc => {
+                    const id = doc.id;
+                    return id
+                })
+                dispatch({ type: USER_MATCH_STATE_CHANGE, match });
             })
     })
 }
