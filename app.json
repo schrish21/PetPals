@@ -23,7 +23,7 @@
     },
     "android": {
       "package": "com.cnq.petpals",
-      "versionCode": 2,
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon-petpals.png", 
         "backgroundColor": "#FFFFFF"
