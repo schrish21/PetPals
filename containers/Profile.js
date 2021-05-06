@@ -46,6 +46,7 @@ function Profile (props) {
                     console.log('does not exist')
                 }
             })
+            
         firebase.firestore()
             .collection("users")
             .doc(props.route.params.uid)
@@ -113,7 +114,23 @@ function Profile (props) {
         .collection("userFollowing")
         .doc(props.route.params.uid)
         .delete()
-        .then(() => alert('Removed user!'))
+        .then(
+          firebase.firestore()
+            .collection("match")
+            .doc(firebase.auth().currentUser.uid)
+            .collection("matched")
+            .doc(props.route.params.uid)
+            .delete()
+            .then(
+              firebase.firestore()
+                .collection("match")
+                .doc(props.route.params.uid)
+                .collection("matched")
+                .doc(firebase.auth().currentUser.uid)
+                .delete()
+                .then(alert('Match Removed'))
+            )
+        )
   }
 
   const startChat = () => {

@@ -47,8 +47,6 @@ function Matches (props) {
               })
       }
 
-      console.log(props.match)
-
       firebase.firestore()
         .collection('match')
         .doc(props.route.params.uid)
@@ -80,9 +78,6 @@ function Matches (props) {
         })
       
   }, [props.route.params.uid, props.following, props.match])
-  
-  console.log(usersMatched)
-
   const navigation = useNavigation();  
 
   return (
