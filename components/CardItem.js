@@ -40,8 +40,36 @@ function CardItem ({name, image, bio, uid, screen, onPressLeft, onPressRight, cu
         .collection("userFollowing")
         .doc(uid)
         .set({})
-        .then(() => alert('Matched user!'))
-  }
+        .then(() => firebase.firestore()
+                    .collection("following")
+                    .doc(uid)
+                    .collection("userFollowing")
+                    .doc(currentuser.uid)
+                    .get()
+                    .then((docSnapshot) => {
+                      if (docSnapshot.exists) {
+                        alert('The other person liked you as well!')
+                        
+                        firebase.firestore()
+                        .collection("match")
+                        .doc(currentuser.uid)
+                        .collection("matched")
+                        .doc(uid)
+                        .set({})
+                        
+                        firebase.firestore()
+                        .collection("match")
+                        .doc(uid)
+                        .collection("matched")
+                        .doc(currentuser.uid)
+                        .set({})
+                    }
+                      else {
+
+                      }
+                  })
+        );
+        }     
 
   const onUnfollow = () => {
     firebase.firestore()
