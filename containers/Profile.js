@@ -222,8 +222,16 @@ function Profile (props) {
         {props.route.params.uid == firebase.auth().currentUser.uid ? (
         <View style={styles.actionsProfile}>
           <TouchableOpacity style={styles.circledButton} onPress={() => navigation.navigate("Save")}>
-            <Text style={styles.iconButtonX}>
+            <Text style={styles.iconButton}>
               <Icon name='camera'
+                  type='font-awesome' 
+                  color='white'
+                  size={28} />
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.circledButton2} onPress={() => navigation.navigate("Edit Profile")}>
+            <Text style={styles.iconButtonX}>
+              <Icon name='pencil-square-o'
                   type='font-awesome' 
                   color='white'
                   size={28} />

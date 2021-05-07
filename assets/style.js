@@ -189,14 +189,14 @@ export default StyleSheet.create({
 	iconButton: { 
 		fontFamily: FONT, 
 		fontSize: 20, 
-		marginTop: 5,
+		marginTop: 3,
 		color: 'white' 
 	},
 	iconButtonX: { 
 		fontFamily: FONT, 
 		fontSize: 20, 
 		color: 'white',
-		marginTop: 5,
+		marginTop: 3,
 		marginLeft:2 
 	},
 	iconButtonSettings:{
@@ -220,6 +220,18 @@ export default StyleSheet.create({
 		alignItems: "center",
 		marginLeft: 8,
 		marginRight: 10
+	},
+	circledButton2: {
+		width: 50,
+		height: 50,
+		borderRadius: 25,
+		borderWidth: 2,
+		borderColor: '#3a527a',
+		backgroundColor: '#7dafff',
+		justifyContent: "center",
+		alignItems: "center",
+		marginLeft: 8,
+		marginRight: 8
 	},
 	circledButtonX: {
 		justifyContent: "center",

@@ -11,6 +11,7 @@ import SettingsScreen from "./containers/Settings";
 import MoreInfoScreen from "./containers/MoreInfo";
 
 import SaveScreen from './components/Save';
+import EditScreen from './components/Edit';
 import ChatScreen from "./components/Chat";
 import ContactUsScreen from "./components/ContactUs";
 
@@ -104,6 +105,7 @@ export class App extends Component {
 
                     <Stack.Screen name="MoreInfo" component={MoreInfoScreen} navigation={this.props.navigation}/>
                     <Stack.Screen name="Save" component={SaveScreen} navigation={this.props.navigation}/>
+                    <Stack.Screen name="Edit Profile" component={EditScreen} navigation={this.props.navigation}/>
                     <Stack.Screen name="Settings" component={SettingsScreen} navigation={this.props.navigation}/>
                     <Stack.Screen name="ContactUs" component={ContactUsScreen} navigation={this.props.navigation}/>
 
